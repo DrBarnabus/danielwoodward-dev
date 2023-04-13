@@ -1,0 +1,5 @@
+*.png !text !filter !merge !diff
+*.gif !text !filter !merge !diff
+*.ttf !text !filter !merge !diff
+*.webp !text !filter !merge !diff
+*.ico !text !filter !merge !diff
