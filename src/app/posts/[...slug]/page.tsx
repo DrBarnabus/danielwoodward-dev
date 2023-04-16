@@ -29,12 +29,13 @@ export function generateMetadata({ params }: Props): Metadata {
   const ogImage = `${baseUrl}/og?title=${title}&subtitle=${summary ?? ''}&blog=true`;
   const description = summary ?? 'Post Not Found';
 
+  console.log(baseUrl, url);
   return {
     title,
     description,
     openGraph: {
       type: 'article',
-      url: `${baseUrl}${url}`,
+      url: `${baseUrl}/${url}`,
       title,
       description,
       publishedTime: publishedDate,
