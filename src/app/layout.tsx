@@ -2,6 +2,7 @@ import '~/styles/global.scss';
 
 import { Inter } from 'next/font/google';
 import { cx } from 'class-variance-authority';
+import { Analytics } from '@vercel/analytics/react';
 import { type Metadata } from 'next/types';
 import { Header } from '~/components/header';
 import { Footer } from '~/components/footer';
@@ -48,6 +49,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="col-span-3 row-span-1 row-start-3">
           <Footer />
         </footer>
+
+        <Analytics />
       </body>
     </html>
   );
