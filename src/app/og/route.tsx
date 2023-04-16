@@ -11,16 +11,12 @@ export const config: PageConfig = {
 const fontRegular = fetch(new URL('../../../public/assets/fonts/Inter-Regular.ttf', import.meta.url)).then((res) =>
   res.arrayBuffer()
 );
-const fontSemiBold = fetch(new URL('../../../public/assets/fonts/Inter-SemiBold.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
 const fontBold = fetch(new URL('../../../public/assets/fonts/Inter-Bold.ttf', import.meta.url)).then((res) =>
   res.arrayBuffer()
 );
 
 export async function GET(req: NextRequest) {
   const fontRegularData = await fontRegular;
-  const fontSemiBoldData = await fontSemiBold;
   const fontBoldData = await fontBold;
 
   try {
@@ -48,7 +44,7 @@ export async function GET(req: NextRequest) {
             </div>
           </div>
 
-          <div tw="text-5xl text-center mb-4" style={{ fontFamily: 'Inter SemiBold' }}>
+          <div tw="text-5xl text-center mb-4" style={{ fontFamily: 'Inter' }}>
             {title}
           </div>
 
@@ -64,11 +60,6 @@ export async function GET(req: NextRequest) {
           {
             name: 'Inter',
             data: fontRegularData,
-            style: 'normal',
-          },
-          {
-            name: 'Inter SemiBold',
-            data: fontSemiBoldData,
             style: 'normal',
           },
           {
