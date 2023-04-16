@@ -2,6 +2,7 @@ import { type Post } from 'contentlayer/generated';
 import Link from 'next/link';
 import { getFormattedDateTime } from '~/lib';
 import { PostTags } from './post-tags';
+import { PostPublished } from './post-published';
 
 type Props = {
   post: Post;
@@ -28,12 +29,7 @@ export const PostCard = ({ post }: Props) => {
             ) : null}
           </h2>
           <p className="text-slate-700 dark:text-zinc-200">{summary}</p>
-          <div className="text-xs text-zinc-600 dark:text-zinc-300">
-            <span>Published </span>
-            <time dateTime={iso}>{date} </time>
-            <span className="max-xs:hidden inline-block text-zinc-500 dark:text-zinc-400"> · {relativeToNow}</span>
-          </div>
-
+          <PostPublished publishedDate={publishedDate} className="text-xs text-zinc-600 dark:text-zinc-300" />
           <PostTags tags={tags} />
         </div>
       </article>
