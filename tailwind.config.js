@@ -1,18 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/app/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./src/**/*.{ts,tsx}'],
+  darkMode: 'class',
   theme: {
+    fontFamily: {
+      sans: [
+        'var(--font-inter)',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'Segoe UI',
+        'Roboto',
+        'Helvetica',
+        'Arial',
+        'sans-serif',
+      ],
+    },
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        accent: {
+          DEFAULT: 'rgba(var(--color-accent) / <alpha-value>)',
+        },
+      },
+      gridTemplateColumns: {
+        layout: '1fr minmax(480px, 1280px) 1fr',
+      },
+      gridTemplateRows: {
+        layout: '6rem minmax(calc(100vh - 12rem), 1fr) 6rem',
       },
     },
   },
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/typography')],
+};
