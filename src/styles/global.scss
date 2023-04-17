@@ -2,48 +2,5 @@
 @use 'tailwindcss/components' as tailwindComponents;
 @use 'tailwindcss/utilities' as tailwindUtilities;
 
-:root {
-  --color-accent: 223 53 84; // #E93554
-
-  &.dark {
-    --color-accent: 223 59 87; // #DF3B57
-  }
-}
-
-html {
-  scroll-behavior: smooth;
-
-  @media (prefers-reduced-motion: reduce) {
-    scroll-behavior: auto;
-  }
-}
-
-body {
-  text-rendering: optimizeSpeed;
-}
-
-/** Markdown */
-
-h1,
-h2,
-h3 {
-  a[href^='#'] {
-    float: left;
-    padding-right: 4px;
-    margin-left: -20px;
-    line-height: 1;
-    visibility: hidden;
-    text-decoration: none;
-
-    svg {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-
-  &:hover {
-    a[href^='#'] {
-      visibility: visible;
-    }
-  }
-}
+@use '_base';
+@use '_markdown';

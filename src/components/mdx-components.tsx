@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import type { HTMLProps } from 'react';
 import type { MDXComponents } from 'mdx/types';
+import { CodeBlock } from './code-block';
+import { cx } from 'class-variance-authority';
 
 function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   if (href && href.startsWith('/')) {
@@ -18,4 +20,12 @@ function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   );
 }
 
-export const MdxComponents: MDXComponents = { a };
+function p(props: React.HTMLProps<HTMLParagraphElement>) {
+  return <div className={cx('my-5', props.className)} {...props}></div>;
+}
+
+function pre({ children }: React.HTMLProps<HTMLPreElement>) {
+  return <CodeBlock>{children}</CodeBlock>;
+}
+
+export const MdxComponents: MDXComponents = { a, p, pre };

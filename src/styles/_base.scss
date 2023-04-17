@@ -1,0 +1,19 @@
+:root {
+  --color-accent: 223 53 84; // #E93554
+
+  &.dark {
+    --color-accent: 223 59 87; // #DF3B57
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  text-rendering: optimizeSpeed;
+}
