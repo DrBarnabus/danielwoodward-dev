@@ -1,23 +1,30 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getFormattedDateTime } from '~/lib';
+import { type FormattedDateTime, getFormattedDateTime } from '~/lib';
 
 type Props = {
   publishedDate: string;
+  onFormattedDateTimeUpdated?: (newValues: FormattedDateTime) => void;
   className: string;
 };
 
-export const PostPublished = ({ publishedDate, className }: Props) => {
+export const PostPublished = ({
+  publishedDate,
+  onFormattedDateTimeUpdated: onFormattedDateUpdated,
+  className,
+}: Props) => {
   const [{ iso, date, relativeToNow }, setFormattedDateTime] = useState(getFormattedDateTime(publishedDate));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFormattedDateTime(getFormattedDateTime(publishedDate));
+      const formattedDateTime = getFormattedDateTime(publishedDate);
+      setFormattedDateTime(formattedDateTime);
+      onFormattedDateUpdated?.(formattedDateTime);
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [publishedDate]);
+  }, [publishedDate, onFormattedDateUpdated]);
 
   return (
     <div className={className}>
