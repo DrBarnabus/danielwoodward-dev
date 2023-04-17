@@ -45,12 +45,18 @@ export function useTheme(): [ThemeState, () => void, Dispatch<ThemeState>] {
   }, [themeState, prefersColorSchemeDark]);
 
   const toggleThemeState = useCallback(() => {
-    if ((themeState === 'device' && prefersColorSchemeDark) || themeState === 'dark') {
-      updateThemeState('light');
-    } else {
-      updateThemeState('dark');
+    switch (themeState) {
+      case 'device':
+        updateThemeState('light');
+        break;
+      case 'light':
+        updateThemeState('dark');
+        break;
+      case 'dark':
+        updateThemeState('device');
+        break;
     }
-  }, [themeState, updateThemeState, prefersColorSchemeDark]);
+  }, [themeState, updateThemeState]);
 
   return [themeState, toggleThemeState, updateThemeState];
 }
