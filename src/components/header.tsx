@@ -2,7 +2,9 @@
 
 import { cx } from 'class-variance-authority';
 import Link from 'next/link';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
+import { useEventListener, useSSR, useTheme } from '~/hooks';
+import { Display, Sun, Moon } from './icons';
 
 type NavItemProps = { href: string; children: React.ReactNode };
 const NavItem = ({ href, children }: NavItemProps) => {
@@ -17,21 +19,42 @@ const NavItem = ({ href, children }: NavItemProps) => {
   );
 };
 
+const ThemeToggleButton = () => {
+  const { isClient } = useSSR();
+  const [currentTheme, toggleThemeState] = useTheme();
+
+  if (!isClient) {
+    return null;
+  }
+
+  return (
+    <button title={currentTheme} onClick={toggleThemeState}>
+      {currentTheme === 'device' && (
+        <div>
+          <Display className="h-6 w-6 text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent" />
+        </div>
+      )}
+      {currentTheme === 'light' && (
+        <div>
+          <Sun className="h-6 w-6 text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent" />
+        </div>
+      )}
+      {currentTheme === 'dark' && (
+        <div>
+          <Moon className="h-6 w-6 text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent" />
+        </div>
+      )}
+    </button>
+  );
+};
+
 export const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
 
-  useEffect(() => {
+  useEventListener(document, 'scroll', () => {
     setScrollTop(document.documentElement.scrollTop);
-
-    const handleScroll = () => {
-      setScrollTop(document.documentElement.scrollTop);
-    };
-
-    document.addEventListener('scroll', handleScroll);
-
-    return () => document.removeEventListener('scroll', handleScroll);
-  }, []);
+  });
 
   return (
     <div
@@ -47,6 +70,9 @@ export const Header = () => {
         </NavItem>
         <NavItem href="/posts">Posts</NavItem>
       </nav>
+      <div className="ml-auto flex h-8 flex-row items-center justify-end space-x-1">
+        <ThemeToggleButton />
+      </div>
     </div>
   );
 };
