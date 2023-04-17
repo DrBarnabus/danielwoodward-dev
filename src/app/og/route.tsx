@@ -1,12 +1,9 @@
 import { ImageResponse } from '@vercel/og';
-import { type PageConfig } from 'next';
 import { type NextRequest } from 'next/server';
 
 const accentColour = '#E93554';
 
-export const config: PageConfig = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 const fontRegular = fetch(new URL('../../../public/assets/fonts/Inter-Regular.ttf', import.meta.url)).then((res) =>
   res.arrayBuffer()
