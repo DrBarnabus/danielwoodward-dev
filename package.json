@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write .",
-    "format:check": "prettier -c ."
+    "style": "prettier -c .",
+    "style:fix": "prettier --write ."
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
