@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { type Metadata } from 'next/types';
 import { Header } from '~/components/header';
 import { Footer } from '~/components/footer';
+import { ClientLayout } from '~/ClientLayout';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -37,20 +38,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const darkMode = false;
-
   return (
-    <html lang="en" className={cx(inter.variable, 'antialiased', darkMode ? 'dark' : 'light')}>
+    <html lang="en" className={cx(inter.variable, 'antialiased')}>
       <body className="grid min-h-screen grid-cols-1 grid-rows-layout bg-zinc-50 dark:bg-zinc-900 sm:grid-cols-layout">
-        <header className="sticky top-0 z-50 col-span-3 row-span-1 row-start-1">
-          <Header />
-        </header>
-        <main className="col-span-1 row-start-2 sm:col-start-2">{children}</main>
-        <footer className="col-span-3 row-span-1 row-start-3">
-          <Footer />
-        </footer>
+        <ClientLayout>
+          <header className="sticky top-0 z-50 col-span-3 row-span-1 row-start-1">
+            <Header />
+          </header>
+          <main className="col-span-1 row-start-2 sm:col-start-2">{children}</main>
+          <footer className="col-span-3 row-span-1 row-start-3">
+            <Footer />
+          </footer>
 
-        <Analytics />
+          <Analytics />
+        </ClientLayout>
       </body>
     </html>
   );

@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const PostHeader = ({ title, publishedDate, tags }: Props) => {
-
   return (
     <section className="flex flex-col space-y-2">
       <h1 className="text-2xl font-bold text-zinc-900 drop-shadow-sm dark:text-zinc-50 sm:text-3xl md:text-5xl">
