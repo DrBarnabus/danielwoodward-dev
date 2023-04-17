@@ -52,7 +52,7 @@ export const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
 
-  useEventListener(document, 'scroll', () => {
+  useEventListener(typeof document !== 'undefined' ? document : null, 'scroll', () => {
     setScrollTop(document.documentElement.scrollTop);
   });
 
