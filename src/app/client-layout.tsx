@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ThemeContext, useTheme } from './hooks';
+import { ThemeContext, useTheme } from '~/hooks';
 
 type Props = {
   children: React.ReactNode;

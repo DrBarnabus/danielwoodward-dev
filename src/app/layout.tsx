@@ -6,7 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { type Metadata } from 'next/types';
 import { Header } from '~/components/header';
 import { Footer } from '~/components/footer';
-import { ClientLayout } from '~/ClientLayout';
+import { ClientLayout } from './client-layout';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 

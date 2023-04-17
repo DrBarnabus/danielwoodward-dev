@@ -1,6 +1,7 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import { s } from 'hastscript';
 import rehypeAutolinkHeadings, { type Options as AutolinkOptions } from 'rehype-autolink-headings';
+import rehypePrettyCode, { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -91,6 +92,33 @@ export default makeSource({
             ]
           ),
         } satisfies Partial<AutolinkOptions>,
+      ],
+      [
+        /** Code block syntax highlighting and enhancement */
+        rehypePrettyCode,
+        {
+          theme: {
+            light: 'github-light',
+            dark: 'github-dark',
+          },
+          onVisitLine(node) {
+            if (node.children.length === 0) {
+              node.children = [{ type: 'text', value: ' ' }];
+            }
+          },
+          onVisitHighlightedLine(node) {
+            node.properties.className.push('highlighted');
+          },
+          onVisitHighlightedWord(node) {
+            node.properties.className = ['word'];
+          },
+          tokensMap: {
+            fn: 'entity.name',
+            type: 'entity.name',
+            prop: 'entity.name',
+            const: 'variable.other.constant',
+          },
+        } satisfies Partial<PrettyCodeOptions>,
       ],
     ],
   },

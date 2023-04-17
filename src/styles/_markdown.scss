@@ -1,0 +1,140 @@
+h1,
+h2,
+h3 {
+  a[href^='#'] {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+    visibility: hidden;
+    text-decoration: none;
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &:hover {
+    a[href^='#'] {
+      visibility: visible;
+    }
+  }
+}
+
+pre {
+  @apply m-0 p-0;
+
+  > code {
+    @apply overflow-x-auto p-4;
+
+    &[data-theme='light'] {
+      @apply grid;
+    }
+  }
+}
+
+code {
+  font-weight: revert;
+  @apply rounded px-1 py-0;
+
+  &::before,
+  &::after {
+    content: none !important;
+  }
+
+  &[data-theme='dark'] {
+    @apply hidden bg-zinc-800;
+  }
+
+  &[data-theme='light'] {
+    @apply inline-block bg-white;
+  }
+}
+
+.dark {
+  pre {
+    > code[data-theme='dark'] {
+      @apply grid;
+    }
+  }
+
+  code {
+    &[data-theme='dark'] {
+      @apply inline-block;
+    }
+
+    &[data-theme='light'] {
+      @apply hidden;
+    }
+  }
+}
+
+[data-rehype-pretty-code-title] {
+  @apply w-full rounded-t-lg bg-zinc-200 px-4 py-1 text-zinc-700;
+
+  &[data-theme='dark'] {
+    @apply hidden;
+  }
+
+  &[data-theme='light'] {
+    @apply block;
+  }
+
+  + pre,
+  + pre > code {
+    @apply rounded-t-none;
+  }
+}
+
+.dark {
+  [data-rehype-pretty-code-title] {
+    @apply bg-zinc-700 text-zinc-300;
+
+    &[data-theme='dark'] {
+      @apply block;
+    }
+
+    &[data-theme='light'] {
+      @apply hidden;
+    }
+  }
+}
+
+code {
+  .word {
+    @apply inline-block px-1 py-0;
+  }
+
+  & > .line.highlighted,
+  .word {
+    @apply bg-zinc-100;
+  }
+}
+
+.dark {
+  code {
+    & > .line.highlighted,
+    .word {
+      @apply bg-zinc-700/60;
+    }
+  }
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+
+  & > .line::before {
+    counter-increment: line;
+    content: counter(line);
+    @apply mr-4 inline-block w-6 text-right text-slate-500;
+  }
+}
+
+code[data-line-numbers-max-digits='2'] > .line::before {
+  @apply w-6;
+}
+
+code[data-line-numbers-max-digits='3'] > .line::before {
+  @apply w-8;
+}
