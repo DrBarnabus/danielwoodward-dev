@@ -11,7 +11,7 @@ import { ClientLayout } from './client-layout';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const title = '<DanielWoodward>';
-const titleTemplate = '<DanielWoodward> | %s';
+const titleTemplate = '%s | <DanielWoodward>';
 
 export const metadata: Metadata = {
   title: {
