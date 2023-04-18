@@ -1,3 +1,5 @@
+export * from './check';
+export * from './copy';
 export * from './copyright';
 export * from './display';
 export * from './github';
