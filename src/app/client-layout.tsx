@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { ThemeContext, useTheme } from '~/hooks';
 
 type Props = {
@@ -9,10 +8,6 @@ type Props = {
 
 export const ClientLayout = ({ children }: Props) => {
   const [themeState, toggleThemeState, setThemeState] = useTheme();
-
-  useEffect(() => {
-    setThemeState('dark');
-  }, [setThemeState]);
 
   return (
     <>
