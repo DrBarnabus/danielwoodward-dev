@@ -4,10 +4,10 @@ export const Footer = () => {
   return (
     <div className="relative flex flex-col items-center justify-center space-y-4">
       <div className="max-xs:px-16 flex flex-row flex-wrap justify-center gap-4">
-        <a href="https://github.com/DrBarnabus" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/DrBarnabus" target="_blank" rel="noopener noreferrer" aria-label="My GitHub">
           <GitHub className="h-6 w-6 text-zinc-900 hover:text-accent dark:text-zinc-100 dark:hover:text-accent" />
         </a>
-        <a href="https://www.linkedin.com/in/daniel-woodward/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/daniel-woodward/" target="_blank" rel="noopener noreferrer" aria-label="My LinkedIn">
           <LinkedIn className="h-6 w-6 text-zinc-900 hover:text-accent dark:text-zinc-100 dark:hover:text-accent" />
         </a>
       </div>
