@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  swcMinify: true,
 };
 
 module.exports = withContentlayer(nextConfig);
