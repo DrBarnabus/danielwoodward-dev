@@ -7,7 +7,12 @@ export const Footer = () => {
         <a href="https://github.com/DrBarnabus" target="_blank" rel="noopener noreferrer" aria-label="My GitHub">
           <GitHub className="h-6 w-6 text-zinc-900 hover:text-accent dark:text-zinc-100 dark:hover:text-accent" />
         </a>
-        <a href="https://www.linkedin.com/in/daniel-woodward/" target="_blank" rel="noopener noreferrer" aria-label="My LinkedIn">
+        <a
+          href="https://www.linkedin.com/in/daniel-woodward/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="My LinkedIn"
+        >
           <LinkedIn className="h-6 w-6 text-zinc-900 hover:text-accent dark:text-zinc-100 dark:hover:text-accent" />
         </a>
       </div>

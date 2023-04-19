@@ -12,5 +12,7 @@ export function useSSR() {
   return {
     isClient: browser,
     isServer: !browser,
+    windowOrNull: browser ? window : null,
+    documentOrNull: browser ? document : null,
   };
 }

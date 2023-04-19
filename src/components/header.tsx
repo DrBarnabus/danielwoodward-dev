@@ -49,10 +49,11 @@ const ThemeToggleButton = () => {
 };
 
 export const Header = () => {
+  const { documentOrNull } = useSSR();
   const headerRef = useRef<HTMLDivElement>(null);
   const [scrollTop, setScrollTop] = useState(0);
 
-  useEventListener(typeof document !== 'undefined' ? document : null, 'scroll', () => {
+  useEventListener(documentOrNull, 'scroll', () => {
     setScrollTop(document.documentElement.scrollTop);
   });
 

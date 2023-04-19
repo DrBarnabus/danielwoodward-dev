@@ -1,0 +1,306 @@
+---
+title: 'Useful Hooks For Your NextJS/React Project: useEventListener'
+summary: Need to listen to an event in NextJS or React this post has you covered with how to both listen to the event safely and create your own custom react hook called useEventListener that makes listening to events a breeze
+publishedDate: '2023-04-19 22:00 UTC'
+tags:
+  - NextJS
+  - React
+  - Hooks
+  - EventListener
+  - TypeScript
+  - TypeSafe
+---
+
+React comes with severval [built-in hooks](https://react.dev/reference/react) that cover a variety of use cases. But sometimes you need a hook for a specific purpose so that you can reuse shared logic throughout your applications.
+In this article, which is the first in a series showcasing my favorite react hooks I use in every project, I will be showing you both how to use the `useEventListener{:.fn}` hook and how to create your own from scatch.
+
+The [full source code](#full-source-code) for the hook is provided at the end of the article.
+
+# Starting from scratch
+
+Typically when you need to listen to an event in javascript you will need to add an event listener to the target that is publishing those events.
+For example to listen for events on the window, document or another event target with pure javascript you would do this by calling
+`target.addEventListener(type, listenerCallback){:ts}` with the type of event and your callback function (in this case `window{:ts}` and `'keydown'{:ts}`):
+
+```ts
+window.addEventListner('keydown', (e: Event) => {
+  console.log('Key has been pressed!');
+});
+```
+
+With that in mind you might conclude that you can just do the same from inside your react component:
+
+```tsx
+const App = () => {
+  window.addEventListener('keydown', (e: Event) => {
+    console.log('Key has been pressed!');
+  });
+
+  return <div>Hello World!</div>;
+};
+```
+
+But unfortunately you can't...
+
+While this looks as though it should work at first glance, and it infact might for some very basic usecases, you should not do this. There are infact a few hidden pitfalls with the code shown above:
+
+- The listener could be added multiple times, such as each time the component renders adding multiple callbacks for the same event in the same component
+- Once the component is unmounted the listener will still be registered, we should instead be dilligent in cleaning up the event listener by removing it
+
+We can instead achieve the desired effect by using the built-in `useEffect{:.fn}` hook, the [useEffect](https://react.dev/reference/react/useEffect) hook
+allows for us to synchronize our component with an external system. In this case our "external system" is our event target of `window{:ts}`, so we can use
+this hook to ensure our listener is added only once when the component is mounted and then using a clean-up function we can remove the listener when the
+component unmounts.
+
+`useEffect(setup, dependencies?){:ts}` takes in both a setup function which should contain any setup code (along with the clean-up function which is returned from setup) as well as a list of dependencies that will cause the effect to be
+executed again. So let's try adding that to our previous example:
+
+```tsx {4-9}
+import { useEffect } from 'react';
+
+const App = () => {
+  useEffect(() => {
+    const callback = (e: Event) => {
+      console.log('Key has been pressed!');
+    };
+    window.addEventListener('keydown', callback);
+
+    return () => window.removeEventListener('keydown', callback);
+  }, []);
+
+  return <div>Hello World!</div>;
+};
+```
+
+In this example we call `useEffect{:.fn}` with both our setup/clean-up function and an empty dependencies array. Our setup function first defines the callback we want to be called when an event happens
+`const callback = (e: Event) => { console.log('Key has been pressed!'); }{:ts}` and then registers it with window as an event listener same as we did before `window.addEventListener('keydown', callback){:ts}`.
+The last thing we do in our setup function is return our clean-up function, the function we return here is called once the component is unmounted. In this example we are returning `return () => window.removeEventListener('keydown', callback){:ts}`
+which will remove our event listener from the window. Finally we provide an empty array `[]{:ts}` for the dependencies of the effect, this ensures that our effect only runs once when the component is first mounted.
+
+While this approach works, it results in a lot of repeated code across components or even within the same component if you need to listen to multiple events. So luckily we have custom hooks to our rescue 🎉
+
+# Making our own custom hook
+
+Now we understand the basics of using event handlers inside of `useEffect{:.fn}` lets build our own custom hook to simplify our previous example component. Since this is the first part in my series of posts about custom hooks,
+lets start at the beginning with what is a custom hook?
+
+A [custom hook](https://react.dev/learn/reusing-logic-with-custom-hooks) allows us to extract custom logic into a separate function to combine/abstract multiple built-in hooks or other more complicated logic. By convention
+react hooks should always start with `use` followed by the name of the hook in pascal case, so for our usage we will call our hook `useEventListener(...){:ts}`.
+
+So lets start our hook by creating a new file I personally like to store my hooks in a separate folder `src/hooks` and export a new function called `useEventListener{:.fn}` which accepts three arguments;
+`targetElement{:ts}`, `type{:ts}` and `listener{:ts}` (If you are using TypeScript don't worry about the type errors for now we will fix those later):
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {1-7}
+export const useEventListener = (targetElement, type, listener) => {};
+```
+
+Now lets add the code that we used in our previous example but with a few tweaks:
+
+1. We now use `targetElement{:ts}` and `type{:ts}` in place of `window{:ts}` and `'keydown'{:ts}`
+2. We add `[targetElement, type]{:ts}` to our dependencies array for our `useEffect{:.fn}` call, this ensures that if these change in the
+   component using our hook that we remove our current event listener and add a new event listener to the new target/type combination
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {1-2,8-12}
+import { useEffect } from 'react';
+
+export const useEventListener = (targetElement, type, listener) => {
+  useEffect(() => {
+    targetElement.addEventListener(type /* TODO */);
+
+    return () => targetElement.removeEventListener(type /* TODO */);
+  }, [targetElement, type]);
+};
+```
+
+You may have noticed our listener is missing and that was intentional to keep the changes small, so let's add that now.
+
+To ensure that our event listener always has the latest value and to prevent unnecessary re-renders of our components we are going
+to utilize another built-in react hook [useRef](https://react.dev/reference/react/useRef). `useRef{:.fn}` allows us to store a
+reference to a value and access it's current value without affecting our `useEffect{:.fn}`'s dependency array.
+
+To achieve this we add the following to our custom hook:
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {8-13,15} /, useRef/ /, eventListener/
+import { useEffect, useRef } from 'react';
+
+export const useEventListener = (targetElement, type, listener) => {
+  const listenerRef = useRef(listener);
+
+  useEffect(() => {
+    listenerRef.current = listener;
+  }, [listener]);
+
+  useEffect(() => {
+    const eventListener = (e) => listenerRef.current(e);
+    targetElement.addEventListener(type, eventListener);
+
+    return () => targetElement.removeEventListener(type, eventListener);
+  }, [targetElement, type]);
+};
+```
+
+The above code initializes our ref with the initial value passed into listener and registers a second `useEffect{:.fn}` to update our reference whenever the listener is changed.
+We also added an arrow function `const eventListener = (e) => listenerRef.current(e){:ts}` that calls our reference (this will be key for adding typing in the coming steps) which is
+passed into both `addEventListener{:.fn}` and `removeEventListener{:.fn}`.
+
+As a final finishing touch before we move onto typing our custom hook properly with TypeScript we can add a guard clause. This is to protect against the `targetElement{:ts}` being `null{:ts}`,
+which can be super useful in Server Side Rendered React code where we might not always have access to the elements we want to add event listeners to. When running on the server we simply pass `null{:ts}`
+into `targetElement{:ts}` to skip registering the handlers and then once we have hydrated our content on the client we pass the actual element such as `document{:ts}` or `window{:ts}`.
+This will prevent hyrdration errors in frameworks such as [NextJS](https://nextjs.org/) stopping your components from working in SSR.
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {15-17}
+import { useEffect, useRef } from 'react';
+
+export const useEventListener = (targetElement, type, listener) => {
+  const listenerRef = useRef(listener);
+
+  useEffect(() => {
+    listenerRef.current = listener;
+  }, [listener]);
+
+  useEffect(() => {
+    if (targetElement === null) {
+      return;
+    }
+
+    const eventListener = (e) => listenerRef.current(e);
+    targetElement.addEventListener(type, eventListener);
+
+    return () => targetElement.removeEventListener(type, eventListener);
+  }, [targetElement, type]);
+};
+```
+
+If you are using javascript then the above is all you need to start using the hook and you can skip to [using the hook](#how-to-use-it) but if you are using TypeScript (Psst you should be 😉)
+then continue reading to understand how to correctly type your new custom hook.
+
+We will begin by making our hook into a [generic function](https://www.typescriptlang.org/docs/handbook/2/generics.html), this is because we want to accept multiple possible event targets.
+We will accept a single generic type parameter `K{:.type}` for our `type{:ts}` parameter and add basic types to our other parameters:
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers /<K>/ /: HTMLElement | Window | Document | MediaQueryList | null/ /: K/ /: (event: any) => void/ /: Event/
+import { useEffect, useRef } from 'react';
+
+export const useEventListener = <K>(
+  targetElement: HTMLElement | Window | Document | MediaQueryList | null,
+  type: K,
+  listener: (event: any) => void
+) => {
+  const listenerRef = useRef(listener);
+
+  useEffect(() => {
+    listenerRef.current = listener;
+  }, [listener]);
+
+  useEffect(() => {
+    if (targetElement === null) {
+      return;
+    }
+
+    const eventListener = (e: Event) => listenerRef.current(e);
+    targetElement.addEventListener(type, eventListener);
+
+    return () => targetElement.removeEventListener(type, eventListener);
+  }, [targetElement, type]);
+};
+```
+
+Now this provides us with some limited typing but you might notice a few things. There is no limit on what can be provided via `type{:ts}` as we haven't
+constrained the generic type `K{:.type}` and that our listener currenty has the type `(event: any) => void{:ts}` as we don't know what event is being
+listened to and thus can't properly type the event. We could naively type it as `Event{:.type}` same as we have done on line 19 and make change to `type: string{:ts}`
+but we can do one step better than that.
+
+We created our listener hook as a generic function for this exact reason, by defining a type containing all of the possible events we want to listen to which we will call `EventType{:.type}`. We
+can then add a constraint to our generic function that will only allow events that exist in that type. Additionally we then have a type we can index into get the actual type of the event that we are listening to.
+
+Our `EventType{:.type}` is a [intersection](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html) of all of the event maps available for the event targets that we care about and we
+can constrain our function to these types as shown below:
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {3-4} / extends keyof EventMap/ / as EventMap[K]/ /EventMap[K]/
+import { useEffect, useRef } from 'react';
+
+type EventMap = HTMLElementEventMap & WindowEventMap & DocumentEventMap & MediaQueryListEventMap;
+
+export const useEventListener = <K extends keyof EventMap>(
+  targetElement: HTMLElement | Window | Document | MediaQueryList | null,
+  type: K,
+  listener: (event: EventMap[K]) => void
+) => {
+  const listenerRef = useRef(listener);
+
+  useEffect(() => {
+    listenerRef.current = listener;
+  }, [listener]);
+
+  useEffect(() => {
+    if (targetElement === null) {
+      return;
+    }
+
+    const eventListener = (e: Event) => listenerRef.current(e as EventMap[K]);
+    targetElement.addEventListener(type, eventListener);
+
+    return () => targetElement.removeEventListener(type, eventListener);
+  }, [targetElement, type]);
+};
+```
+
+And thats all there is to it, if you have been following along then you have just created the `useEventListener(targetElement, type, listener){:ts}` custom hook from scratch! 🥳🎉
+
+## How to use it
+
+Now we have our custom hook you may ask "how do I use this in my components?", and that's easy you simply reference the hook in your imports, call it in your component and provide the required parameters:
+
+```tsx showLineNumbers
+import { useEventListener } from 'src/hooks/useEventListener.ts'; // or a path to where you created your hook
+
+const App = () => {
+  useEventListener(window, 'keydown', (e) => {
+    console.log('Key has been pressed!');
+  });
+
+  return <div>Hello World!</div>;
+};
+```
+
+Now isn't that much simpler to understand and it reduces code replication/complexity, what's not to love 😀
+
+# Full source code
+
+As will always be the case the full source code for the custom hook we created in this post is available below and you can also see examples of it being used in action
+in the [GitHub Repository](https://github.com/DrBarnabus/danielwoodward-dev/blob/main/src/hooks/useEventListener.ts) for the blog you are reading right now!
+
+```ts title="src/hooks/useEventListener.ts" showLineNumbers
+import { useEffect, useRef } from 'react';
+
+type EventMap = HTMLElementEventMap & WindowEventMap & DocumentEventMap & MediaQueryListEventMap;
+
+export const useEventListener = <K extends keyof EventMap>(
+  targetElement: HTMLElement | Window | Document | MediaQueryList | null,
+  type: K,
+  listener: (event: EventMap[K]) => void
+) => {
+  const listenerRef = useRef(listener);
+
+  useEffect(() => {
+    listenerRef.current = listener;
+  }, [listener]);
+
+  useEffect(() => {
+    if (targetElement === null) {
+      return;
+    }
+
+    const eventListener = (e: Event) => listenerRef.current(e as EventMap[K]);
+    targetElement.addEventListener(type, eventListener);
+
+    return () => targetElement.removeEventListener(type, eventListener);
+  }, [type, targetElement]);
+};
+```
+
+---
+
+Thanks for taking the time to read my post, if you liked it I would greatly appreciate if you shared with your friends/colleagues. Unfortunately there is no share button,
+as I haven't written that part of the blogs site yet, so you will have to do me a favour and share a link manually 😉
+
+Any feedback is appreciated and the few socials I use are linked at the bottom of this page, I wish you a good day and happy coding!
