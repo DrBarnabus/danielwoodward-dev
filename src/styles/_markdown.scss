@@ -29,7 +29,7 @@ pre {
     @apply overflow-x-auto p-4;
 
     &[data-theme='light'] {
-      @apply grid;
+      @apply mb-5 grid;
     }
   }
 }
@@ -55,7 +55,7 @@ code {
 .dark {
   pre {
     > code[data-theme='dark'] {
-      @apply grid;
+      @apply mb-5 grid;
     }
   }
 

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-type EventMap = HTMLElementEventMap & DocumentEventMap & WindowEventMap & MediaQueryListEventMap;
+type EventMap = HTMLElementEventMap & WindowEventMap & DocumentEventMap & MediaQueryListEventMap;
 
-export function useEventListener<K extends keyof EventMap>(
+export const useEventListener = <K extends keyof EventMap>(
   targetElement: HTMLElement | Window | Document | MediaQueryList | null,
   type: K,
   listener: (event: EventMap[K]) => void
-) {
+) => {
   const listenerRef = useRef(listener);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function useEventListener<K extends keyof EventMap>(
   }, [listener]);
 
   useEffect(() => {
-    if (targetElement == null) {
+    if (targetElement === null) {
       return;
     }
 
@@ -23,4 +23,4 @@ export function useEventListener<K extends keyof EventMap>(
 
     return () => targetElement.removeEventListener(type, eventListener);
   }, [type, targetElement]);
-}
+};
