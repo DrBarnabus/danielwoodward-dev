@@ -36,6 +36,11 @@ export const Post = defineDocumentType(() => ({
       description: 'Date that the post was published',
       required: true,
     },
+    topic: {
+      type: 'string',
+      description: 'The topic the post should be organized under',
+      required: true,
+    },
     tags: {
       type: 'list',
       of: { type: 'string' },
