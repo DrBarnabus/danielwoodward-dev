@@ -55,7 +55,7 @@ component unmounts.
 `useEffect(setup, dependencies?){:ts}` takes in both a setup function which should contain any setup code (along with the clean-up function which is returned from setup) as well as a list of dependencies that will cause the effect to be
 executed again. So let's try adding that to our previous example:
 
-```tsx {4-9}
+```tsx
 import { useEffect } from 'react';
 
 const App = () => {
@@ -90,7 +90,7 @@ react hooks should always start with `use` followed by the name of the hook in p
 So lets start our hook by creating a new file I personally like to store my hooks in a separate folder `src/hooks` and export a new function called `useEventListener{:.fn}` which accepts three arguments;
 `targetElement{:ts}`, `type{:ts}` and `listener{:ts}` (If you are using TypeScript don't worry about the type errors for now we will fix those later):
 
-```ts title="src/hooks/useEventListener.ts" showLineNumbers {1-7}
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {1}
 export const useEventListener = (targetElement, type, listener) => {};
 ```
 
@@ -100,7 +100,7 @@ Now lets add the code that we used in our previous example but with a few tweaks
 2. We add `[targetElement, type]{:ts}` to our dependencies array for our `useEffect{:.fn}` call, this ensures that if these change in the
    component using our hook that we remove our current event listener and add a new event listener to the new target/type combination
 
-```ts title="src/hooks/useEventListener.ts" showLineNumbers {1-2,8-12}
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {1-2,4-8}
 import { useEffect } from 'react';
 
 export const useEventListener = (targetElement, type, listener) => {
@@ -120,7 +120,7 @@ reference to a value and access it's current value without affecting our `useEff
 
 To achieve this we add the following to our custom hook:
 
-```ts title="src/hooks/useEventListener.ts" showLineNumbers {8-13,15} /, useRef/ /, eventListener/
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {4-9,11} /, useRef/ /, eventListener/
 import { useEffect, useRef } from 'react';
 
 export const useEventListener = (targetElement, type, listener) => {
@@ -148,7 +148,7 @@ which can be super useful in Server Side Rendered React code where we might not 
 into `targetElement{:ts}` to skip registering the handlers and then once we have hydrated our content on the client we pass the actual element such as `document{:ts}` or `window{:ts}`.
 This will prevent hyrdration errors in frameworks such as [NextJS](https://nextjs.org/) stopping your components from working in SSR.
 
-```ts title="src/hooks/useEventListener.ts" showLineNumbers {15-17}
+```ts title="src/hooks/useEventListener.ts" showLineNumbers {11-14}
 import { useEffect, useRef } from 'react';
 
 export const useEventListener = (targetElement, type, listener) => {
