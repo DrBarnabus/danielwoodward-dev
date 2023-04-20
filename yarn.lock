@@ -2077,6 +2077,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.2.7
     react: 18.2.0
     react-dom: 18.2.0
+    react-wrap-balancer: ^0.4.0
     rehype-autolink-headings: ^6.1.1
     rehype-pretty-code: ^0.9.4
     rehype-slug: ^5.1.0
@@ -5976,6 +5977,15 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-wrap-balancer@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-wrap-balancer@npm:0.4.0"
+  peerDependencies:
+    react: ^18.0.0
+  checksum: c43e9ecc5737ecd67a5f38f4ed928a489dd20bf63b24bb31abc94c6e8605e1df7302196b74e5805528c7044864ac7ea1eea64117b74b8a91066f781e3239e9cc
   languageName: node
   linkType: hard
 
