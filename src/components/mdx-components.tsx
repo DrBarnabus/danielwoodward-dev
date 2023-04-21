@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import type { HTMLProps } from 'react';
 import type { MDXComponents } from 'mdx/types';
-import { CodeBlock } from './code-block';
 import { cx } from 'class-variance-authority';
+import { CodeBlock } from './code-block';
 import { Figure } from './figure';
+import { TableOfContents } from './table-of-contents';
 
 function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   if (href && href.startsWith('/')) {
@@ -33,4 +34,4 @@ function img({ src, alt }: React.HTMLProps<HTMLImageElement>) {
   return <Figure src={src} alt={alt} />;
 }
 
-export const MdxComponents: MDXComponents = { a, p, pre, img };
+export const MdxComponents: MDXComponents = { a, p, pre, img, TableOfContents };

@@ -1,4 +1,5 @@
 export * from './check';
+export * from './chevron-down';
 export * from './copy';
 export * from './copyright';
 export * from './display';

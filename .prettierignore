@@ -2,3 +2,4 @@
 .next
 .yarn
 node_modules
+content/**/*.mdx

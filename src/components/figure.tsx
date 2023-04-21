@@ -42,7 +42,7 @@ export const Figure = ({ src, alt: altFromMdx }: Props) => {
         alt={alt ?? ''}
         width={width}
         height={height}
-        className={cx('rounded', caption && 'rounded-b-none')}
+        className={cx('rounded', caption ? 'rounded-b-none' : '')}
       />
 
       {caption && (
