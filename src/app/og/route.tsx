@@ -5,7 +5,7 @@ const accentColour = '#E93554';
 
 export const runtime = 'edge';
 
-const fontRegular = fetch(new URL('../../../public/assets/fonts/Inter-Regular.ttf', import.meta.url)).then((res) =>
+const fontSemiBold = fetch(new URL('../../../public/assets/fonts/Inter-SemiBold.ttf', import.meta.url)).then((res) =>
   res.arrayBuffer()
 );
 const fontBold = fetch(new URL('../../../public/assets/fonts/Inter-Bold.ttf', import.meta.url)).then((res) =>
@@ -13,7 +13,7 @@ const fontBold = fetch(new URL('../../../public/assets/fonts/Inter-Bold.ttf', im
 );
 
 export async function GET(req: NextRequest) {
-  const fontRegularData = await fontRegular;
+  const fontSemiBoldData = await fontSemiBold;
   const fontBoldData = await fontBold;
 
   try {
@@ -21,15 +21,13 @@ export async function GET(req: NextRequest) {
 
     const hasTitle = searchParams.has('title');
     const title = hasTitle && searchParams.get('title')?.slice(0, 100);
-    const hasSubtitle = searchParams.has('subtitle');
-    const subtitle = hasSubtitle && searchParams.get('subtitle')?.slice(0, 100);
     const isBlog = searchParams.has('blog');
 
     return new ImageResponse(
       (
         <div tw="w-full h-full flex flex-col items-center justify-center bg-zinc-300 text-zinc-800">
           <div
-            tw="flex flex-row items-center text-7xl mb-8"
+            tw="flex flex-row items-center text-6xl mb-8"
             style={{ marginBottom: hasTitle ? '2rem' : '0rem', fontFamily: 'Inter Bold' }}
           >
             <div tw="flex w-full items-center justify-center font-semibold">
@@ -41,12 +39,8 @@ export async function GET(req: NextRequest) {
             </div>
           </div>
 
-          <div tw="text-5xl text-center mb-4" style={{ fontFamily: 'Inter' }}>
+          <div tw="text-3xl text-center mb-4" style={{ fontFamily: 'Inter Semi-Bold' }}>
             {title}
-          </div>
-
-          <div tw="text-3xl text-zinc-700 text-center" style={{ fontFamily: 'Inter' }}>
-            {subtitle}
           </div>
         </div>
       ),
@@ -55,8 +49,8 @@ export async function GET(req: NextRequest) {
         height: 630,
         fonts: [
           {
-            name: 'Inter',
-            data: fontRegularData,
+            name: 'Inter Semi-Bold',
+            data: fontSemiBoldData,
             style: 'normal',
           },
           {
