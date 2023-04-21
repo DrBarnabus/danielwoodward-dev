@@ -1,8 +1,8 @@
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { allPosts } from 'contentlayer/generated';
-import { MdxContent } from '~/components/mdx-content';
-import { PostHeader } from '~/components/post-header';
+import { MdxContent } from '~/components/markdown/mdx-content';
+import { PostHeader } from '~/components/post/post-header';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 

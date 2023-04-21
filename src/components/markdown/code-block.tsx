@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Check, Copy } from './icons';
+import { Check, Copy } from '../icons';
 
 const getClipboardTextFromChildren = (element: React.ReactElement | string): string => {
   if (typeof element === 'string') return element;

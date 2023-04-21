@@ -2,7 +2,7 @@
 
 import { cx } from 'class-variance-authority';
 import { useState } from 'react';
-import { ChevronDown } from './icons';
+import { ChevronDown } from '../icons';
 
 type Props = {
   children: React.ReactNode;
