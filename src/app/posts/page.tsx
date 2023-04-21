@@ -2,7 +2,7 @@ import { type Metadata } from 'next/types';
 import { allPosts } from 'contentlayer/generated';
 import { PostCard } from '~/components/post-card';
 
-const baseUrl = `https://${process.env.VERCEL_URL ?? 'localhost:3000'}`;
+const baseUrl = `https://${process.env.NEXT_PUBLIC_SITE_URL}`;
 const title = 'Posts';
 const description = `All of my blog posts are available here. At the moment I mainly write about dotnet/C# and NextJS.`;
 const ogImage = `${baseUrl}/og?title=${title}&blog=true`;

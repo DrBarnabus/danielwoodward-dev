@@ -4,7 +4,7 @@ import { allPosts } from 'contentlayer/generated';
 import { MdxContent } from '~/components/mdx-content';
 import { PostHeader } from '~/components/post-header';
 
-const baseUrl = `https://${process.env.VERCEL_URL ?? 'localhost:3000'}`;
+const baseUrl = `https://${process.env.NEXT_PUBLIC_SITE_URL}`;
 
 type Props = {
   params: {
