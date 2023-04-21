@@ -26,7 +26,7 @@ export function generateMetadata({ params }: Props): Metadata {
     publishedDate: new Date().toISOString(),
   };
 
-  const ogImage = `${baseUrl}/og?title=${title}&subtitle=${summary ?? ''}&blog=true`;
+  const ogImage = `${baseUrl}/og?title=${title}&blog=true`;
   const description = summary ?? 'Post Not Found';
 
   return {
