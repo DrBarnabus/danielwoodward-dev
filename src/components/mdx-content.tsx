@@ -1,3 +1,5 @@
+'use client';
+
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { MdxStyles } from './mdx-styles';
 import { MdxComponents } from './mdx-components';
