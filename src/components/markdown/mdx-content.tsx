@@ -1,11 +1,16 @@
+'use client';
+
+import { useMDXComponent } from 'next-contentlayer/hooks';
 import { cx } from 'class-variance-authority';
-import type { ReactNode } from 'react';
+import { MdxComponents } from './mdx-components';
 
 type Props = {
-  children: ReactNode;
+  code: string;
 };
 
-export function MdxStyles({ children }: Props) {
+export function MdxContent({ code }: Props) {
+  const Component = useMDXComponent(code);
+
   return (
     <section
       className={cx(
@@ -17,7 +22,7 @@ export function MdxStyles({ children }: Props) {
         'prose-ul:my-4 prose-li:my-0 prose-li:marker:text-zinc-300 dark:prose-li:marker:text-zinc-400'
       )}
     >
-      {children}
+      <Component components={MdxComponents} />
     </section>
   );
 }
