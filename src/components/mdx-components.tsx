@@ -3,6 +3,7 @@ import type { HTMLProps } from 'react';
 import type { MDXComponents } from 'mdx/types';
 import { CodeBlock } from './code-block';
 import { cx } from 'class-variance-authority';
+import { Figure } from './figure';
 
 function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   if (href && href.startsWith('/')) {
@@ -28,4 +29,8 @@ function pre({ children }: React.HTMLProps<HTMLPreElement>) {
   return <CodeBlock>{children}</CodeBlock>;
 }
 
-export const MdxComponents: MDXComponents = { a, p, pre };
+function img({ src, alt }: React.HTMLProps<HTMLImageElement>) {
+  return <Figure src={src} alt={alt} />;
+}
+
+export const MdxComponents: MDXComponents = { a, p, pre, img };

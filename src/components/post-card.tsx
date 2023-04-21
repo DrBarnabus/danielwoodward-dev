@@ -34,7 +34,9 @@ export const PostCard = ({ post }: Props) => {
               ) : null}
             </Balancer>
           </h2>
-          <p className="text-slate-700 dark:text-zinc-200"><Balancer>{summary}</Balancer></p>
+          <p className="text-slate-700 dark:text-zinc-200">
+            <Balancer>{summary}</Balancer>
+          </p>
           <PostPublished
             publishedDate={publishedDate}
             className="text-xs text-zinc-600 dark:text-zinc-300"
