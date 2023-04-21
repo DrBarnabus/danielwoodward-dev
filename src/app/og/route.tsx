@@ -5,15 +5,11 @@ const accentColour = '#E93554';
 
 export const runtime = 'edge';
 
-const fontSemiBold = fetch(new URL('../../../public/assets/fonts/Inter-SemiBold.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
-);
 const fontBold = fetch(new URL('../../../public/assets/fonts/Inter-Bold.ttf', import.meta.url)).then((res) =>
   res.arrayBuffer()
 );
 
 export async function GET(req: NextRequest) {
-  const fontSemiBoldData = await fontSemiBold;
   const fontBoldData = await fontBold;
 
   try {
@@ -39,7 +35,7 @@ export async function GET(req: NextRequest) {
             </div>
           </div>
 
-          <div tw="text-3xl text-center mb-4" style={{ fontFamily: 'Inter Semi-Bold' }}>
+          <div tw="text-3xl text-center mb-4" style={{ fontFamily: 'Inter Bold' }}>
             {title}
           </div>
         </div>
@@ -48,11 +44,6 @@ export async function GET(req: NextRequest) {
         width: 1200,
         height: 630,
         fonts: [
-          {
-            name: 'Inter Semi-Bold',
-            data: fontSemiBoldData,
-            style: 'normal',
-          },
           {
             name: 'Inter Bold',
             data: fontBoldData,
