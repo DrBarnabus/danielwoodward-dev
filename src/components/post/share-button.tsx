@@ -4,6 +4,8 @@ import { cx } from 'class-variance-authority';
 import { useEffect, useMemo, useState } from 'react';
 import { Share } from '../icons';
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
 type Props = { url: string; title: string };
 
 export const ShareButton = ({ url, title }: Props) => {
@@ -11,11 +13,13 @@ export const ShareButton = ({ url, title }: Props) => {
 
   const shareData = useMemo(
     () => ({
-      url,
+      url: `${baseUrl}/${url}`,
       title,
     }),
     [url, title]
   );
+
+  console.log(shareData);
 
   useEffect(() => {
     setCanShare(
