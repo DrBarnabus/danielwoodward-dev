@@ -5,6 +5,7 @@ import { cx } from 'class-variance-authority';
 import { CodeBlock } from './code-block';
 import { Figure } from './figure';
 import { TableOfContents } from './table-of-contents';
+import { CalloutPanel } from './callout-panel';
 
 function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   if (href && href.startsWith('/')) {
@@ -34,4 +35,4 @@ function img({ src, alt }: React.HTMLProps<HTMLImageElement>) {
   return <Figure src={src} alt={alt} />;
 }
 
-export const MdxComponents: MDXComponents = { a, p, pre, img, TableOfContents };
+export const MdxComponents: MDXComponents = { a, p, pre, img, TableOfContents, CalloutPanel };
