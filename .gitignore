@@ -44,3 +44,7 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer
+
+# next-sitemap
+public/robots.txt
+public/sitemap*.xml
