@@ -214,7 +214,7 @@ export const useEventListener = <K>(
 
 Now this provides us with some limited typing but you might notice a few things. There is no limit on what can be provided via `type{:ts}` as we haven't
 constrained the generic type `K{:.type}` and that our listener currently has the type `(event: any) => void{:ts}` as we don't know what event is being
-listened to and thus can't properly type the event. We could naively type it as `Event{:.type}` same as we have done on line 19 and make change to `type: string{:ts}`
+listened to and thus can't properly type the event. We could naively type it as `Event{:.type}` same as we have done on line 19 and change to `type: string{:ts}`
 but we can do one step better than that.
 
 We created our listener hook as a generic function for this exact reason, by defining a type containing all of the possible events we want to listen to which we will call `EventType{:.type}`. We
