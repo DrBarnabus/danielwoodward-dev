@@ -12,8 +12,8 @@ tags:
   - TypeSafe
 ---
 
-React comes with severval [built-in hooks](https://react.dev/reference/react) that cover a variety of use cases. But sometimes you need a hook for a specific purpose so that you can reuse shared logic throughout your applications.
-In this article, which is the first in a series showcasing my favorite react hooks I use in every project, I will be showing you both how to use the `useEventListener{:.fn}` hook and how to create your own from scatch.
+React comes with several [built-in hooks](https://react.dev/reference/react) that cover a variety of use cases. But sometimes you need a hook for a specific purpose so that you can reuse shared logic throughout your applications.
+In this article, which is the first in a series showcasing my favourite react hooks I use in every project, I will be showing you both how to use the `useEventListener{:.fn}` hook and how to create your own from scratch.
 
 And as an added bonus the [full source code](#full-source-code) for the hook is provided at the end of the article.
 
@@ -31,7 +31,7 @@ For example to listen for events on the window, document or another event target
 `target.addEventListener(type, listenerCallback){:ts}` with the type of event and your callback function (in this case `window{:ts}` and `'keydown'{:ts}`):
 
 ```ts
-window.addEventListner('keydown', (e: Event) => {
+window.addEventListener('keydown', (e: Event) => {
   console.log('Key has been pressed!');
 });
 ```
@@ -50,10 +50,10 @@ const App = () => {
 
 But unfortunately you can't...
 
-While this looks as though it should work at first glance, and it infact might for some very basic usecases, you should not do this. There are infact a few hidden pitfalls with the code shown above:
+While this looks as though it should work at first glance, and it in fact might for some very basic use cases, you should not do this. There are a few hidden pitfalls with the code shown above:
 
 - The listener could be added multiple times, such as each time the component renders adding multiple callbacks for the same event in the same component
-- Once the component is unmounted the listener will still be registered, we should instead be dilligent in cleaning up the event listener by removing it
+- Once the component is unmounted the listener will still be registered, we should instead be diligent in cleaning up the event listener by removing it
 
 We can instead achieve the desired effect by using the built-in `useEffect{:.fn}` hook, the [useEffect](https://react.dev/reference/react/useEffect) hook
 allows for us to synchronize our component with an external system. In this case our "external system" is our event target of `window{:ts}`, so we can use
@@ -154,7 +154,7 @@ passed into both `addEventListener{:.fn}` and `removeEventListener{:.fn}`.
 As a final finishing touch before we move onto typing our custom hook properly with TypeScript we can add a guard clause. This is to protect against the `targetElement{:ts}` being `null{:ts}`,
 which can be super useful in Server Side Rendered React code where we might not always have access to the elements we want to add event listeners to. When running on the server we simply pass `null{:ts}`
 into `targetElement{:ts}` to skip registering the handlers and then once we have hydrated our content on the client we pass the actual element such as `document{:ts}` or `window{:ts}`.
-This will prevent hyrdration errors in frameworks such as [NextJS](https://nextjs.org/) stopping your components from working in SSR.
+This will prevent hydration errors in frameworks such as [NextJS](https://nextjs.org/) stopping your components from working in SSR.
 
 ```ts title="src/hooks/useEventListener.ts" showLineNumbers {11-14}
 import { useEffect, useRef } from 'react';
@@ -213,7 +213,7 @@ export const useEventListener = <K>(
 ```
 
 Now this provides us with some limited typing but you might notice a few things. There is no limit on what can be provided via `type{:ts}` as we haven't
-constrained the generic type `K{:.type}` and that our listener currenty has the type `(event: any) => void{:ts}` as we don't know what event is being
+constrained the generic type `K{:.type}` and that our listener currently has the type `(event: any) => void{:ts}` as we don't know what event is being
 listened to and thus can't properly type the event. We could naively type it as `Event{:.type}` same as we have done on line 19 and make change to `type: string{:ts}`
 but we can do one step better than that.
 
@@ -252,7 +252,7 @@ export const useEventListener = <K extends keyof EventMap>(
 };
 ```
 
-And thats all there is to it, if you have been following along then you have just created the `useEventListener(targetElement, type, listener){:ts}` custom hook from scratch! 🥳🎉
+And that's all there is to it, if you have been following along then you have just created the `useEventListener(targetElement, type, listener){:ts}` custom hook from scratch! 🥳🎉
 
 ## How to use it
 
