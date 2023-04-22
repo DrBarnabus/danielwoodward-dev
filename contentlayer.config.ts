@@ -47,6 +47,11 @@ export const Post = defineDocumentType(() => ({
       description: 'A list of keywords that relate to the post',
       required: true,
     },
+    recommendedPosts: {
+      type: 'list',
+      of: { type: 'string' },
+      description: 'A list of recommended post slugs to recommend at the end of the post',
+    },
   },
   computedFields: {
     url: {

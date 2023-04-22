@@ -7,4 +7,5 @@ export * from './github';
 export * from './linkedin';
 export * from './moon';
 export * from './notdef';
+export * from './share';
 export * from './sun';

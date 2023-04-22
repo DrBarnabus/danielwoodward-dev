@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { allPosts } from 'contentlayer/generated';
 import { MdxContent } from '~/components/markdown/mdx-content';
 import { PostHeader } from '~/components/post/post-header';
+import { PostFooter } from '~/components/post/post-footer';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -60,6 +61,7 @@ export default function Page({ params }: Props) {
     <article className="h-full px-8 pt-8">
       <PostHeader title={post.title} publishedDate={post.publishedDate} tags={post.tags} />
       <MdxContent code={post.body.code} />
+      <PostFooter post={post} />
     </article>
   );
 }
