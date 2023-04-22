@@ -1,0 +1,137 @@
+---
+title: 'How I built my Personal Blog with NextJS 13, Vercel and Contentlayer - Part 1'
+summary: 'The process of how I built my new Personal Blog with NextJS 13, Vercel and Contentlayer. All the steps to get a basic site up and running and how to deploy it for free!'
+publishedDate: '2023-04-22'
+topic: NextJS
+tags:
+  - NextJS
+  - Vercel
+  - Contentlayer
+  - AppDirectory
+  - Markdown
+  - MDX
+  - Blog
+  - React
+  - TypeScript
+  - SSG
+---
+
+Over the past week or so in my spare time I've been busy building my new Personal Blog Site (which you are currently looking at 😉)
+using [Next.js 13][nextjs-docs]'s new App Directory, [Contentlayer][contentlayer]'s easy to setup tooling for working
+with Markdown/[MDX][mdx] and deployed it with just a few clicks to [Vercel][vercel]'s amazing platform completely for **free!**
+
+Now it's _mostly finished_, only been working on tweaks and enhancements, and I've tested it fully by posting my first post. I've
+decided to write about how I got this setup in around **5 hours** worth of work over a weekend and how you could do the same.
+I'll cover some questions such as; Why the hell I would build my blog from scratch instead of using one of the countless offerings
+out there, Why I chose the technologies I did to build it and What's are my future plans for this site?
+
+This is the first part of a series of posts on this topic, as and when subsequent parts are available I will add the links here.
+
+{/* prettier-ignore */}
+<TableOfContents>
+- [Why build a blog from scratch in the first place?](#why-build-a-blog-from-scratch-in-the-first-place)
+- [Why did I choose the technologies I have?](#why-did-i-choose-the-technologies-i-have)
+  - [Why NextJS?](#why-nextjs)
+  - [Why Contentlayer?](#why-contentlayer)
+  - [Why Vercel?](#why-vercel)
+</TableOfContents>
+
+# Why build a blog from scratch in the first place?
+
+![{{ "width": 480, "height": 270, "alt": "A person falling over at a Petrol Station with Text I can do it myself" }}](/images/i-can-do-it-myself.gif)
+
+Why would you build a blog from scratch when there are [countless][forbes-best-blogging-platforms] existing platforms that would have
+required a single click to setup? And it's an **extremely valid** question, even after spending my time building this site, even I am
+still planning on re-publishing my content on [Medium][my-medium-profile] to reach a larger audience. But there are a few reasons why
+I inevitably decided to build my own blog from scratch:
+
+- **I'm just that type of person:** Being a Software Developer, and a naturally inquisitive person, I like to know how the tools I'm
+  using work "under the hood". I've never been satisfied with just using something because it works, I always like to know how it works
+  and more importantly why it works the way that it does.
+- **The challenge and opportunity to learn:** Building a blog that statically generates content from Markdown requires quite a lot of effort
+  to get setup and even more so if you want it to work properly and look nice while it's doing it. But to me that's part of the fun, the
+  opportunity to expose myself to and learn new tools/frameworks that I might have otherwise overlooked because it wasn't for a "hobby
+  project".
+- **Full control and autonomy:** One of if not the most significant advantages of building your own personal website/blog from scratch is
+  that you have 100% full control and autonomy over it. How it looks, how it works, how it's deployed and the content that's on it is
+  completely up to you as you are the complete owner of all the code and content. You can add/remove features and do literally anything
+  you set your mind to, if this is something you want I would highly recommend building from scratch, especially if you are quick picky.
+- **Not locked into a specific platform:** By building and hosting everything yourself it means you aren't tied into a specific platform.
+  You are free to move your site anytime you want, host it anywhere you want and quite honestly do anything you want to do with it!
+- **Customization:** As you aren't using a specific platform/template you can do literally anything with it and make the site completely
+  your own. There are literally 0 restrictions on what you can do, as long as it's possible with current web technology of course. If you
+  do this right you can make your site truly unique!
+
+There are of course some downsides to building your blog from scratch:
+
+- **Time investment:** One of the main downsides is the time investment, your time is valuable and if you have to spend time that you
+  would otherwise have spent writing content for your blog on writing features that come standard with "out of the box" platforms then
+  that could be seen as a waste of time. Building features from scratch to a good quality takes a lot of time so you need to be happy
+  with the trade off that this represents (Customization + Quality = >TimeInvestment).
+- **Hosting charges:** At least with the initial deployment of this blog the hosting charges are £0/m, but with growth which anyone
+  starting their blogging endevour of course hopes for then this could raise as you reach your allocated resource limits. These types
+  of scaling pain points affect any type of site/app on the web, so you will need to have a clear plan to deal with these.
+- **Discoverability:** Writing articles that nobody can find is enough to put anybody off when it comes to the time investment of writing
+  content for any site. You'll have to build an audience from scratch which can be incredibly daunting and demoralising, but there are
+  ways to combat this such as re-posting on existing sites such as [Medium][my-medium-profile] to benefit from it's exsting search reputation.
+
+Of course there are positives and negatives to everything you do, I have detailed these here just so you know what you are getting into if
+you decide to follow this path.
+
+# Why did I choose the technologies I have?
+
+Onto our second topic for this post, why choose the specific technologies I have to build this blog? There are a number of building blocks
+you could use to implement any application, some are right for the job and some of them just plain are not. So I want to take a few moments
+to detail why I chose NextJS, Contentlayer and Vercel.
+
+{/* TODO: See if I can find an image for Square Peg Round Hole */}
+
+## Why NextJS?
+
+[Next.js][nextjs-docs] and more specifically [v13][nextjs-beta] has been almost somewhat of a spiritual awakening for me into the world of
+React, SSG, Server Side Rendering and Edge. I had dabbled with Next.js before but never quite connected with it on the level that I needed
+to for me to be comfortable using it in anything serious, or even using it in hobby projects. Next.js 13 changed that for me with the
+introduction of the [App Directory][nextjs-beta-app], this new structure along with the introduction of React Server Components gave me the
+push I needed to properly investigate Nest.js and dive into creating some Hobby Projects with it. And after experimenting with it's new mental
+model for creating apps I just instantly fell in love ❤️. (As a side note, I know it's Next.js but I just prefer writing it as NextJS 🤷)
+
+{/* https://media.tenor.com/p0g-OXF-Vl8AAAAd/perfect-homelander.gif */}
+
+One of the strong points of NextJS is that it can statically generate pages at build time, which is great for our use case as it's going to
+almost entirely consist of static content. Any content that I can't statically generate, such as OpenGraph images, I'm planning on deploying
+as either serverless or edge compute by virtue of Next's integration with it's creator [Vercel][vercel].
+
+## Why Contentlayer?
+
+[Contentlayer][contentlayer] is a Content SDK for validating, transforming and working with your content in a type-safe format that you can
+easily import into your application. For more information about contentlayer I would suggest reading their [blog post][contentlayer-post].
+Put simply this package made it trivial to build your content including Markdown/MDX into an easily consumable strongly typed format for
+use in NextJS. I've had some limited experience with content generation before with some static site generators (mainly for documentation
+sites), but I have to say without a doubt using contentlayer has been game changing and demonstrates the accessibility tools in the modern
+web-dev ecosystem have made the experience.
+
+## Why Vercel?
+
+Ever since learning about [Vercel][vercel] I have been looking for an excuse to use it for a project, and after deploying my personal blog
+with it I can wholeheartedly say It's my new favorite way to deploy projects period. From pushing my GitRepo to having the site up and
+running took literally minutes, it took me longer to remember my GoDaddy password than it did to get this site up and running.
+
+Platforms like Vercel are really taking us into a golden age of one click deployments and near-instantanious builds, and to say at present
+this is all running on their incredible Free Tier which includes everything you need including automatic HTTPS/TLS certificates it's an
+extremely impressive and compelling experience.
+
+Vercel also excels at delivering your content as rapidly as possible, it's excillent caching and edge functions ensure your content is as
+close to your users giving them an extremely performant experience.
+
+![{{ "width": 440, "height": 248, "alt": "The Flash running", "caption": "How your static site loads on Vercel" }}](/images/flash-run.gif)
+
+{/* Links */}
+[nextjs-docs]: https://nextjs.org/docs
+[nextjs-beta]: https://beta.nextjs.org/docs
+[nestjs-beta-app]: https://beta.nextjs.org/docs/routing/fundamentals#the-app-directory
+[contentlayer]: https://www.contentlayer.dev
+[contentlayer]: https://www.contentlayer.dev/blog/working-with-content-is-hard-for-developers
+[mdx]: https://mdxjs.com
+[vercel]: https://vercel.com
+[forbes-best-blogging-platforms]: https://www.forbes.com/advisor/business/software/best-blogging-platforms/
+[my-medium-profile]: https://medium.com/@drbarnabus

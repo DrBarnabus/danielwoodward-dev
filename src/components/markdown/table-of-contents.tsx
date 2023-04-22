@@ -26,7 +26,7 @@ export const TableOfContents = ({ children }: Props) => {
           className={cx('ml-auto h-4 w-4 transition-transform duration-300 ease-in-out', expanded ? 'rotate-180' : '')}
         />
       </button>
-      {expanded && <div className="p-2 prose-ul:my-1">{children}</div>}
+      {expanded && <div className="p-2 prose-ul:!my-1">{children}</div>}
     </div>
   );
 };
