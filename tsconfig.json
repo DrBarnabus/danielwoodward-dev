@@ -32,6 +32,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
+    "**/*.js",
     ".contentlayer/generated",
     ".next/types/**/*.ts"
   ],
