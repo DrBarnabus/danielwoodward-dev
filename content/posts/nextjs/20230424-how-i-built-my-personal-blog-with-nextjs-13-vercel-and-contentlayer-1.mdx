@@ -1,7 +1,7 @@
 ---
 title: 'How I built my Personal Blog with NextJS 13, Vercel and Contentlayer - Part 1'
 summary: 'The process of how I built my new Personal Blog with NextJS 13, Vercel and Contentlayer. All the steps to get a basic site up and running and how to deploy it for free!'
-publishedDate: '2023-04-23'
+publishedDate: '2023-04-24'
 topic: NextJS
 tags:
   - NextJS
@@ -36,6 +36,7 @@ If you aren't interesting in the background or the reasons for choosing the spec
   - [Why Contentlayer?](#why-contentlayer)
   - [Why Vercel?](#why-vercel)
 - [Getting started](#getting-started)
+- [What to do next?](#what-to-do-next)
 </TableOfContents>
 
 This is the first part of a series of posts on this topic, as and when subsequent parts are available I will add the links here.
@@ -286,6 +287,192 @@ vitae odit hic quam, aspernatur facere expedita voluptas doloremque. Neque, quam
 For the following examples, I have defined three posts `posts/post-01.md{:text}`, `posts/post-02.md{:text}` and `posts/post-03.md{:text}`
 but you can of course call these anything you would like and fill them with anything you would like.
 
+### 5. Add a simple feed
+
+Now we have defined our posts (or at least our example posts) we can start getting this data into our pages. Let's begin by starting
+`yarn dev{:bash}` so that our dev server is running and our `.contentlayer{:text}` directory and files are generated.
+
+![{{ "width": 900, "height": 492, "alt": "Terminal Window showing 'yarn dev'", "caption": "Step 5. Starting development server" }}](/images/posts/nextjs/how-i-built-my-personal-blog-01/step5-1.webp)
+
+<CalloutPanel type="info" hideType>
+  Due to a bug in Contentlayer at the time of writing the `.contentlayer{:text}` directory might not be automatically generated when
+  running `yarn dev{:bash}` so you may need to manually run `yarn contentlayer build{:bash}` for the content to be generated.
+</CalloutPanel>
+
+Now we have our content transformed into type-safe data let's create a simple page to display all of our posts as links. We do this quite
+simply by importing `allPosts{:ts}` which is an array of `Post{:.type}` from the `contentlayer/generated{:text}` path. Using this generated
+array of posts we can access the data from our posts that we defined earlier such as the `title{:ts}`, `publishedDate{:ts}` and `url{:ts}`:
+
+```ts title="src/app/page.tsx" showLineNumbers /title/ /publishedDate/ /url/
+import { allPosts } from 'contentlayer/generated';
+import Link from 'next/link';
+
+export default function Page() {
+  const posts = allPosts.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+
+  return (
+    <div className="mt-4 flex flex-col space-y-4">
+      <h1 className="mx-4 text-3xl font-bold">Example Blog</h1>
+
+      {posts.map((post) => (
+        <div key={post.url} className="mx-4 bg-zinc-200 p-4">
+          <Link href={post.url}>
+            <h2 className="text-lg font-bold">{post.title}</h2>
+            <time dateTime={post.publishedDate} className="block text-sm text-zinc-600">
+              {post.publishedDate}
+            </time>
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+Now if you navigate to `http://localhost:3000/{:text}` (or wherever your development server is running) you should see all of the posts you
+defined in [step 4](#4-add-your-first-post) in a somewhat nicely formatted list sorted in reverse chronological order. Of course you could
+do any amount of styling or additional processing to this data to make this page look and feel your own, but it's a great starting point.
+
+![{{ "width": 900, "height": 257, "alt": "Final result of the Feed Page" }}](/images/posts/nextjs/how-i-built-my-personal-blog-01/step5-2.png)
+
+### 6. Rendering our posts
+
+At the moment if you click one of the above posts you are greeted with a 404 error, that's because we haven't yet created a page that will be
+responsible for rendering the data provided by Contentlayer to a page. So let's look at doing that right now!
+
+We'll start by creating a new page in the app directory under `app/posts/[...slug]/page.tsx{:text}` and pasting in the following code:
+
+```ts title="src/app/posts/[...slug]/page.tsx" showLineNumbers
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { allPosts } from 'contentlayer/generated';
+
+type Props = {
+  params: {
+    slug: string[];
+  };
+};
+
+export async function generateStaticParams(): Promise<Props['params'][]> {
+  return allPosts.map(({ url }) => ({
+    slug: url.split('/').slice(1), // Remove posts from the start of the url
+  }));
+}
+
+export default function Page({ params }: Props) {
+  const post = allPosts.find((post) => post.url === `/posts/${params.slug.join('/')}`);
+
+  if (!post) {
+    notFound();
+  }
+
+  return (
+    <article className="mx-auto max-w-3xl py-8">
+      <Link href="/" className="text-center font-semibold text-indigo-500">
+        Home
+      </Link>
+
+      <div className="my-6">
+        <h1 className="mb-1 text-3xl font-bold">{post.title}</h1>
+        <time dateTime={post.publishedDate} className="block text-sm text-zinc-600">
+          {post.publishedDate}
+        </time>
+      </div>
+
+      <div dangerouslySetInnerHTML={{ __html: post.body.html }}></div>
+    </article>
+  );
+}
+```
+
+Now there is a lot to take in there, so let's go through this in byte-size chunks.
+
+First of all we define a new type called `Props{.type}` this is defining a type that we are going to use in the two following functions to
+type the parameter passed from [generateStaticParams][nextjs-beta-static-params] into our `Page{:.fn}` function.
+
+```ts
+type Props = {
+  params: {
+    slug: string[];
+  };
+};
+```
+
+Secondly we define and export a function called `generateStaticParams{:.fn}`, with NextJS App Directory this is a special function that can
+be used to generate dynamic route parameters at build time instead of on-demand at request time. In this case in our function we are getting
+our `allPosts{:ts}` object and mapping it to `{ slug: url.split('/').slice(1) }{:ts}`, which effectively sets up all the parameters for our
+page component for each of our posts. In this function we also remove the `/posts/{:text}` from the beginning of the url so the route is
+correct.
+
+```ts
+export async function generateStaticParams(): Promise<Props['params'][]> {
+  return allPosts.map(({ url }) => ({
+    slug: url.split('/').slice(1), // Remove posts from the start of the url
+  }));
+}
+```
+
+Finally we export our page function which takes in our generated `Props{:.type}` and renders the post. In this basic example we are finding
+the specific post from within our generated `allPosts{:ts}` array, if it does not exist we call NextJS's `notFound{:.fn}` which shows a 404
+error. But if the post is found we construct some HTML to display a Home link and the Title/PublishedDate of the post, and finally we add
+the generated html to a div on the page using `dangerouslySetInnerHTML{:.text}`.
+
+```ts
+export default function Page({ params }: Props) {
+  const post = allPosts.find((post) => post.url === `/posts/${params.slug.join('/')}`);
+
+  if (!post) {
+    notFound();
+  }
+
+  return (
+    <article className="mx-auto max-w-3xl py-8">
+      <Link href="/" className="text-center font-semibold text-indigo-500">
+        Home
+      </Link>
+
+      <div className="my-6">
+        <h1 className="mb-1 text-3xl font-bold">{post.title}</h1>
+        <time dateTime={post.publishedDate} className="block text-sm text-zinc-600">
+          {post.publishedDate}
+        </time>
+      </div>
+
+      <div dangerouslySetInnerHTML={{ __html: post.body.html }}></div>
+    </article>
+  );
+}
+```
+
+And that's all there is to it, clicking on a link to one of the posts on our feed should now take us to the generated html from our
+markdown files!
+
+![{{ "width": 900, "height": 235, "alt": "Demonstration of the Feed/Post pages working", "caption": " It's just that easy 🥳🎉" }}](/images/posts/nextjs/how-i-built-my-personal-blog-01/step6.webp)
+
+We now have a working site that generates html from our markdown files, from where we can do almost anything we want to style the html such
+as adding CSS styles. So you may be asking...
+
+# What to do next?
+
+That's a good question as there are a number of ways to further improve this:
+- Supporting MDX (React Components within Markdown) as I mentioned earlier in this post
+- Properly styling the generated html with `@tailwindcss/typography{:text}`
+- Adding Metadata such as Title/Description/Topic/Tags both to the page and to the `<head>{:html}`
+- Support more Markdown/MDX features such as:
+  - [GitHub Flavoured Markdown][gfm], which is a dialect of Markdown which you may prefer if you are used to GitHub's Markdown features
+  - `<pre><code>...</code></pre>{:html}` Code Blocks with proper syntax highlighting
+  - Inline images with the ability to add captions and using `@next/image{:text}` to optimize the images
+  - Auto-linking headings
+- OpenGraph Image Generation
+
+All this and potentially more will be covered in future posts, as soon as they are released I will be sure to link them below!
+
+In the meantime if you have any ideas for how you could improve this or make it your own, I highly encourage you to experiment and make
+something for yourself!
+
+If you want to see a full working example the code featured in the code blocks above is available on [GitHub][next13-blog-repo] or feel
+free to take a look at the code for my personal blog which is also available on GitHub [here][this-blog-repo]
+
 {/* Links */}
 [nextjs-docs]: https://nextjs.org/docs
 [nextjs-beta]: https://beta.nextjs.org/docs
@@ -299,3 +486,7 @@ but you can of course call these anything you would like and fill them with anyt
 [my-medium-profile]: https://medium.com/@drbarnabus
 [yarn-getting-started]: https://yarnpkg.com/getting-started
 [frontmatter]: https://mdxjs.com/guides/frontmatter/
+[nextjs-beta-static-params]: https://beta.nextjs.org/docs/api-reference/generate-static-params
+[gfm]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+[next13-blog-repo]: https://DrBarnabus/next13-blog
+[this-blog-repo]: https://github.com/DrBarnabus/danielwoodward-dev
