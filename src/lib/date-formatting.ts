@@ -34,9 +34,9 @@ const relativeTimeFormatter = new Intl.RelativeTimeFormat('en-GB', {
 const getDateDifference = (date: Date) => date.getTime() - new Date().getTime();
 
 const getRelative = (date: Date) => {
-  const timeDifferenceInMiliseconds = getDateDifference(date);
+  const timeDifferenceInMilliseconds = getDateDifference(date);
 
-  const minutes = Math.ceil(timeDifferenceInMiliseconds / 1000 / 60);
+  const minutes = Math.ceil(timeDifferenceInMilliseconds / 1000 / 60);
   if (minutes > -60) {
     return relativeTimeFormatter.format(minutes, 'minutes');
   }
@@ -87,6 +87,6 @@ export const getFormattedDateTime = (dateString: string): FormattedDateTime => {
     date: longDateFormatter.format(date),
     time: timeFormatter.format(date),
     relativeToNow: relativeToNow,
-    isFresh: getDateDifference(date) < 1000 * 60 * 60 * 24 * 3, // within 3 days
+    isFresh: getDateDifference(date) > -(1000 * 60 * 60 * 24 * 3), // within 3 days
   };
 };
