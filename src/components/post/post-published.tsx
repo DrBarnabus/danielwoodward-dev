@@ -17,11 +17,14 @@ export const PostPublished = ({
   const [{ iso, date, relativeToNow }, setFormattedDateTime] = useState(getFormattedDateTime(publishedDate));
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const onInterval = () => {
       const formattedDateTime = getFormattedDateTime(publishedDate);
       setFormattedDateTime(formattedDateTime);
       onFormattedDateUpdated?.(formattedDateTime);
-    }, 60000);
+    }
+
+    onInterval();
+    const interval = setInterval(onInterval, 60000);
 
     return () => clearInterval(interval);
   }, [publishedDate, onFormattedDateUpdated]);
