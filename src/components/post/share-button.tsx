@@ -19,8 +19,6 @@ export const ShareButton = ({ url, title }: Props) => {
     [url, title]
   );
 
-  console.log(shareData);
-
   useEffect(() => {
     setCanShare(
       typeof navigator !== 'undefined' && typeof navigator.canShare === 'function' && navigator.canShare(shareData)

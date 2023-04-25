@@ -59,7 +59,7 @@ export default function Page({ params }: Props) {
 
   return (
     <article className="h-full px-8 pt-8">
-      <PostHeader title={post.title} publishedDate={post.publishedDate} tags={post.tags} />
+      <PostHeader title={post.title} readingTime={post.readingTime} publishedDate={post.publishedDate} tags={post.tags} />
       <MdxContent code={post.body.code} />
       <PostFooter post={post} />
     </article>
