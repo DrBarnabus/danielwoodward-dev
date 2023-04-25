@@ -64,6 +64,15 @@ export const Post = defineDocumentType(() => ({
       description: 'The slug of the post, e.g. my-topic/my-post',
       resolve: (post) => resolveUrl(post._raw.flattenedPath, true),
     },
+    readingTime: {
+      type: 'number',
+      description: 'The estimated time in minutes for the average person to read the post',
+      resolve: (post) => {
+        const regex = /\w+/g;
+        const wordCount = post.body.raw.match(regex)?.length;
+        return  !wordCount ? undefined: Math.ceil(wordCount / 200);
+      }
+    }
   },
 }));
 
