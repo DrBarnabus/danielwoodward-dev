@@ -1,5 +1,5 @@
-import { type Metadata } from 'next/types';
 import { allPosts } from 'contentlayer/generated';
+import { type Metadata } from 'next/types';
 import { PostCard } from '~/components/post/post-card';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;

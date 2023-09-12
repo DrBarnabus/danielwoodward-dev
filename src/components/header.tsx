@@ -4,7 +4,7 @@ import { cx } from 'class-variance-authority';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { useEventListener, useSSR, useTheme } from '~/hooks';
-import { Display, Sun, Moon } from './icons';
+import { Display, Moon, Sun } from './icons';
 
 type NavItemProps = { href: string; children: React.ReactNode };
 const NavItem = ({ href, children }: NavItemProps) => {
