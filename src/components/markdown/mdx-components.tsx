@@ -1,11 +1,11 @@
+import { cx } from 'class-variance-authority';
+import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 import type { HTMLProps } from 'react';
-import type { MDXComponents } from 'mdx/types';
-import { cx } from 'class-variance-authority';
+import { CalloutPanel } from './callout-panel';
 import { CodeBlock } from './code-block';
 import { Figure } from './figure';
 import { TableOfContents } from './table-of-contents';
-import { CalloutPanel } from './callout-panel';
 
 function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
   if (href && href.startsWith('/')) {
