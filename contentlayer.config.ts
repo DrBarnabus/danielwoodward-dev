@@ -57,7 +57,7 @@ export const Post = defineDocumentType(() => ({
     url: {
       type: 'string',
       description: 'The url of the post, e.g. /posts/my-topic/my-post',
-      resolve: (post) => resolveUrl(post._raw.flattenedPath, false),
+      resolve: (post) => `/${resolveUrl(post._raw.flattenedPath, false)}`,
     },
     slug: {
       type: 'string',
