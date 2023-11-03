@@ -1,11 +1,11 @@
 import '~/styles/global.scss';
 
-import { Inter } from 'next/font/google';
-import { cx } from 'class-variance-authority';
 import { Analytics } from '@vercel/analytics/react';
-import { type Metadata } from 'next/types';
-import { Header } from '~/components/header';
+import { cx } from 'class-variance-authority';
+import { Inter } from 'next/font/google';
+import type { Metadata, Viewport } from 'next/types';
 import { Footer } from '~/components/footer';
+import { Header } from '~/components/header';
 import { ClientLayout } from './client-layout';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -14,6 +14,7 @@ const title = '<DanielWoodward />';
 const titleTemplate = '%s | <DanielWoodward />';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: {
     default: title,
     template: titleTemplate,
@@ -25,10 +26,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Daniel Woodward', url: 'https://danielwoodward.dev' }],
   creator: 'Daniel Woodward',
   publisher: 'Daniel Woodward',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#E93554' },
-    { media: '(prefers-color-scheme: dark)', color: '#DF3B57' },
-  ],
   icons: {
     icon: [
       { url: '/assets/icon-512x512.png', sizes: '512x512' },
@@ -57,6 +54,13 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#E93554' },
+    { media: '(prefers-color-scheme: dark)', color: '#DF3B57' },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

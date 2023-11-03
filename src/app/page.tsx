@@ -3,23 +3,21 @@ import { WelcomeHeroSection } from '~/components/welcome-hero-section';
 import { WelcomePostsSection } from '~/components/welcome-posts-section';
 import { WelcomeProjectsSection } from '~/components/welcome-projects-section';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const title = '<DanielWoodward />';
 const description = 'My personal website and tech blog';
-const ogImage = `${baseUrl}/og`;
 
 export const metadata: Metadata = {
   openGraph: {
     type: 'website',
-    url: `${baseUrl}/posts`,
+    url: 'posts',
     title,
     description,
-    images: [ogImage],
+    images: ['og'],
   },
   twitter: {
     title,
     description,
-    images: ogImage,
+    images: 'og',
     card: 'summary_large_image',
   },
 };

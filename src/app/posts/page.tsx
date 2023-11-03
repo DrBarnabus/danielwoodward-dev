@@ -2,17 +2,16 @@ import { allPosts } from 'contentlayer/generated';
 import { type Metadata } from 'next/types';
 import { PostCard } from '~/components/post/post-card';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const title = 'Posts';
 const description = `All of my blog posts are available here. At the moment I mainly write about dotnet/C# and NextJS.`;
-const ogImage = `${baseUrl}/og?title=${title}&blog=true`;
+const ogImage = `og?title=${title}&blog=true`;
 
 export const metadata: Metadata = {
   title,
   description,
   openGraph: {
     type: 'website',
-    url: `${baseUrl}/posts`,
+    url: 'posts',
     title,
     description,
     images: [ogImage],

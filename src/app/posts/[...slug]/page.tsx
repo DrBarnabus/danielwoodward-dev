@@ -5,8 +5,6 @@ import { MdxContent } from '~/components/markdown/mdx-content';
 import { PostFooter } from '~/components/post/post-footer';
 import { PostHeader } from '~/components/post/post-header';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
 type Props = {
   params: {
     slug: string[];
@@ -27,7 +25,7 @@ export function generateMetadata({ params }: Props): Metadata {
     publishedDate: new Date().toISOString(),
   };
 
-  const ogImage = `${baseUrl}/og?title=${title}&blog=true`;
+  const ogImage = `og?title=${title}&blog=true`;
   const description = summary ?? 'Post Not Found';
 
   return {
@@ -35,7 +33,7 @@ export function generateMetadata({ params }: Props): Metadata {
     description,
     openGraph: {
       type: 'article',
-      url: `${baseUrl}/${url}`,
+      url,
       title,
       description,
       publishedTime: publishedDate,
