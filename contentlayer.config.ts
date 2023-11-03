@@ -150,15 +150,16 @@ export default makeSource({
             light: 'github-light',
             dark: 'github-dark',
           },
+          grid: false,
           onVisitLine(node) {
             if (node.children.length === 0) {
               node.children = [{ type: 'text', value: ' ' }];
             }
           },
           onVisitHighlightedLine(node) {
-            node.properties.className.push('highlighted');
+            node.properties.className?.push('highlighted');
           },
-          onVisitHighlightedWord(node) {
+          onVisitHighlightedChars(node) {
             node.properties.className = ['word'];
           },
           tokensMap: {

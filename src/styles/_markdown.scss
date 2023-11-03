@@ -106,7 +106,7 @@ code {
     @apply inline-block px-1 py-0;
   }
 
-  & > .line.highlighted,
+  & > [data-highlighted-line],
   .word {
     @apply bg-zinc-100;
   }
@@ -114,7 +114,7 @@ code {
 
 .dark {
   code {
-    & > .line.highlighted,
+    & > [data-highlighted-line],
     .word {
       @apply bg-zinc-700/60;
     }
@@ -124,17 +124,17 @@ code {
 code[data-line-numbers] {
   counter-reset: line;
 
-  & > .line::before {
+  & > [data-line]::before {
     counter-increment: line;
     content: counter(line);
     @apply mr-4 inline-block w-6 text-right text-slate-500;
   }
 }
 
-code[data-line-numbers-max-digits='2'] > .line::before {
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
   @apply w-6;
 }
 
-code[data-line-numbers-max-digits='3'] > .line::before {
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
   @apply w-8;
 }
