@@ -2108,15 +2108,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-variance-authority@npm:^0.5.3":
-  version: 0.5.3
-  resolution: "class-variance-authority@npm:0.5.3"
-  peerDependencies:
-    typescript: ">= 4.5.5 < 6"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: b780820c688753ba9a9ca168fd60d862f092b822422e91804950ed758f49424d81d7e00e64efb710debdbcd9069b390257ff8e21aef2e3b1bb0d00b4aa9628b3
+"class-variance-authority@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "class-variance-authority@npm:0.7.0"
+  dependencies:
+    clsx: 2.0.0
+  checksum: e7fd1fab433ef06f52a1b7b241b70b4a185864deef199d3b0a2c3412f1cc179517288264c383f3b971a00d76811625fc8f7ffe709e6170219e88cd7368f08a20
   languageName: node
   linkType: hard
 
@@ -2153,6 +2150,13 @@ __metadata:
     strip-ansi: ^6.0.1
     wrap-ansi: ^7.0.0
   checksum: 79648b3b0045f2e285b76fb2e24e207c6db44323581e421c3acbd0e86454cba1b37aea976ab50195a49e7384b871e6dfb2247ad7dec53c02454ac6497394cb56
+  languageName: node
+  linkType: hard
+
+"clsx@npm:2.0.0":
+  version: 2.0.0
+  resolution: "clsx@npm:2.0.0"
+  checksum: a2cfb2351b254611acf92faa0daf15220f4cd648bdf96ce369d729813b85336993871a4bf6978ddea2b81b5a130478339c20d9d0b5c6fc287e5147f0c059276e
   languageName: node
   linkType: hard
 
@@ -2325,7 +2329,7 @@ __metadata:
     "@vercel/analytics": ^1.1.1
     "@vercel/og": ^0.5.20
     autoprefixer: 10.4.16
-    class-variance-authority: ^0.5.3
+    class-variance-authority: ^0.7.0
     contentlayer: ^0.3.4
     eslint: 8.52.0
     eslint-config-next: 14.0.1
@@ -2341,7 +2345,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-typist-component: ^1.0.5
-    react-wrap-balancer: ^0.4.1
+    react-wrap-balancer: ^1.1.0
     rehype-autolink-headings: ^6.1.1
     rehype-pretty-code: ^0.9.11
     rehype-slug: ^5.1.0
@@ -6477,12 +6481,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-wrap-balancer@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "react-wrap-balancer@npm:0.4.1"
+"react-wrap-balancer@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "react-wrap-balancer@npm:1.1.0"
   peerDependencies:
-    react: ^18.0.0
-  checksum: a5f104448eede8c939c929c6d7b4a090b6bc0510e7e77fd3fb2cf069db9a9114d72d97f5a98edc4ec4ca5abf91ca333c7718cd4237908c0e2419e3cfc5f969df
+    react: ">=16.8.0 || ^17.0.0 || ^18"
+  checksum: 576671cc1d38d1715995639981b96024c26809821f52868d7dfc1c48bbf23c4434eec6154fe79b2ad0050003d349ec500773a54d43cb026ad31cd10abfae9762
   languageName: node
   linkType: hard
 
