@@ -3,8 +3,6 @@ import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { MdxContent } from '~/components/markdown/mdx-content';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
 type Props = {
   params: {
     slug: string[];
@@ -29,14 +27,14 @@ export function generateMetadata({ params }: Props): Metadata {
     publishedDate: new Date().toISOString(),
   };
 
-  const ogImage = `${baseUrl}/og?title=${title}`;
+  const ogImage = `og?title=${title}`;
 
   return {
     title,
     description,
     openGraph: {
       type: 'article',
-      url: `${baseUrl}/${url}`,
+      url,
       title,
       description,
       images: [ogImage],
