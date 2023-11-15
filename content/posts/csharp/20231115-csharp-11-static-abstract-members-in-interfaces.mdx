@@ -1,0 +1,221 @@
+---
+title: C# 11 Features - Static Abstract Members in Interfaces
+summary: |
+  From Generic Math, Parsing, and Formatting to other usages like strongly typed construction of interfaces. Static
+  Abstract Members have so many usages but no one seems to be talking about them!
+publishedDate: 2023-11-15 22:30 UTC
+topic: C#
+tags:
+  - C#
+  - C# 11
+  - New Features
+  - Interfaces
+  - Static Abstract Members
+---
+
+Static abstract members in interfaces is one of in my opinion the coolest and most useful features added to interfaces
+since I started using C# about 9 years ago. But it seems that almost no one is talking about them.
+
+Other than their use in [Generic Math][generic-math] introduced with .NET 7, which seemed to take most of the lime light
+from this feature, I haven't seen many videos or posts talking about their introduction as a feature. Which is crazy
+because they've already been so useful to me in this past year since their introduction.
+
+So without further adieu let's talk about Static abstract/virtual members and interfaces!
+
+![{{ "width": 497, "height": 280, "alt": "Cat in the hat saying I'm so excited!" }}](/images/memes/im-so-excited.gif)
+
+<TableOfContents>
+- [First a quick introduction](#first-a-quick-introduction)
+- [Generic Math](#generic-math)
+- [Parsing & Formatting](#parsing--formatting)
+- [Strongly typed construction of Interfaces](#strongly-typed-construction-of-interfaces)
+- [Final thoughts](#final-thoughts)
+</TableOfContents>
+
+# First a quick introduction
+
+Now I've said already twice it's one of my favourite features added in C# 11, but let's go back to the beginning. What
+exactly does Static Abstract Members in Interfaces mean and how can we use them to write better code?
+
+This feature requires C# 11 on .NET 7 but it can be enabled without .NET 7 if you turn on [preview features][preview-features]
+in .NET 6. Once the feature is enabled you can add `static abstract{:cs}` or `static virtual{:cs}` members to your
+interfaces without getting a compiler error. It also allows you to define other methods that are typically static on your
+interface type such as operators & conversions.
+
+Now on the surface without an explanation of what this enables, it might sound like a boring feature but... I'm here to
+tell you that this enables some great functionality with interfaces that can make Generic Programming much easier.
+
+Let's start with a basic example, similar to how the feature was introduced in Microsoft's Welcome to C# 11 blog, using
+it to make math operations generic. Let's start by defining a new function `Generic.AddValues<T>(params T[] values){:cs}`:
+
+```cs
+public static class Generic
+{
+  public static T AddValues<T>(params T[] values) where T : INumber<T> =>
+    values.Aggregate(T.Zero, (current, value) => current + value);
+}
+```
+
+Above we're defining a function called `Generic.AddValues<T>(){:cs}` that takes in an array of parameters of type `T{:cs}`
+usually if you did this without this feature enabled it wouldn't be possible to implement it because `T.Zero{:cs}` and the
+`+operator{:cs}` wouldn't be possible to use. Now with Static Members in Interfaces & Generic Math we can add a generic
+constraint of `where T : INumber<T>{:cs}` and it give's us access to a number of static members of `T{:cs}`. Most
+importantly for this example: `T.Zero{:cs}` and `T.op_Addition{:cs}` (the + operator).
+
+Then we can call it with any type that implements `INumber<TSelf>{:cs}` like `int{:cs}` or `double{:cs}`:
+```cs
+int addedIntValues = Generic.AddValues(10, 20, 30, 40, 50);
+Console.WriteLine(addedIntValues); // returns 150
+
+double addedDecimalValues = Generic.AddValues(0.10, 0.25, 0.65, 0.05, 0.20);
+Console.WriteLine(addedDecimalValues); // returns 1.25
+```
+
+This is possible because the `INumber<T>{:cs}` interface is defined to be something like so and all of the base C# types
+like; int, decimal, double, short etc implement this interface:
+
+```cs
+public interface INumber<TSelf>
+  where TSelf : INumber<TSelf>
+{
+  static abstract TSelf Zero { get; }
+
+  static abstract TResult operator +(TSelf left, TOther right);
+
+  static virtual TResult operator checked +(TSelf left, TOther right) => left + right;
+}
+```
+
+As you can see in the above example it's possible to define static methods as both `abstract{:cs}` and `virtual{:cs}`,
+`virtual{:cs}` can be used with default implementations of functions that can be overridden. Whereas `abstract{:cs}` must
+be implemented by the type that's implementing `INumber<TSelf>{:cs}`.
+
+So now we know what Static Abstract/Virtual Members in Interfaces are, let's continue with some more detailed examples.
+
+# Generic Math
+
+Now we've already briefly covered [Generic Math][generic-math] but here are a few reasons using generic math can improve
+your code both in applications and libraries:
+
+- Utilize Generics where it didn't used to be possible, for example the dotnet team utilized Generic Math to remove near
+  enough 800 lines of code from Enumerable.Min/Max.
+- APIs can support a number of types without writing explicit overloads, with my `AddValues{:cs}` example if dotnet added
+  a new type that implemented `INumber<TSelf>{:cs}` tomorrow my function would still work without any changes.
+- Further to the last point, this also extends to custom types so if I wrote my own type that implemented
+  `INumber<TSelf>{:cs}` then I would be able to call `AddValues{:cs}` with my custom type as well and that's pretty cool.
+
+If you want to find out more about Generic Math you can read about it in the dotnet documentation [here][generic-math-docs].
+
+# Parsing & Formatting
+
+Another example of where this helps us reduce repeated code is with parsing and formatting. Historically if you wanted to
+implement a function to parse a string (for example to get an `int{:cs}` out of a `Claim{:cs}`) then you might need to
+implement an overload for each type you want to parse. There were options such as `Convert.ChangeType{:cs}` but I've
+never found those to be very clean solutions.
+
+But now with the introduction of Static Abstract Methods we get a few other interfaces supported by the base classes in
+dotnet. One of these being `IParsable<TSelf>{:cs}` which provides us with Parse and TryParse static methods for the
+passed in generic type like so:
+
+```cs
+public static class Generic
+{
+    public static T ParseValue<T>(string s, T defaultValue) where T : IParsable<T> =>
+        T.TryParse(s, null, out var value) ? value : defaultValue;
+}
+```
+
+Now the above example has been simplified quite greatly but you get the idea, you can pass a generic type and parse your
+string data into it. There is also a `ISpanParsable<TSelf>{:cs}` that allows you to parse from a `ReadOnlySpan<char>{:cs}`
+if your into that sort of thing (which I am 😉).
+
+But what about formatting generic values as strings you may be asking? Well that's where the counterpart interface of
+`IFormattable{:cs}` comes in (you could also use `ISpanFormattable{:cs}`) which exposes a `ToString{:.fn}`
+with a format so that you can format generic values exactly as you want 😎
+
+Again one of the main benefits of this these new types of interfaces is that you can allow any type that implements
+`IParsable<TSelf>{:cs}`/`IFormattable{:cs}` as your generic, reducing the amount of code required to support many types
+including ones you didn't know about at the time of writing which is great for libraries.
+
+# Strongly typed construction of Interfaces
+
+One issue I've hit quite often while working on Generic/Extensible Code is constructing instances of types implementing
+interfaces from generic code. Take for example an interface for a Build Server and an implementing type:
+
+```cs
+public interface IBuildServer
+{
+    bool IsCurrentServer { get; }
+}
+
+public sealed class AzurePipelines : IBuildServer
+{
+    private readonly Environment _environment;
+
+    public AzurePipelines(Environment environment) => _environment = environment;
+
+    public bool IsCurrentServer => !string.IsNullOrEmpty(_environment.GetEnvironmentVariable("TF_BUILD"));
+}
+```
+
+If we want to construct an instance of `IBuildServer{:cs}` using a generic method, our only option would be to use
+`Activator.CreateInstance(){:cs}` like so:
+
+```cs
+public static IBuildServer CreateBuildServer<T>() where T : IBuildServer
+{
+    return (IBuildServer?)Activator.CreateInstance(typeof(T), new Environment()) ?? throw new InvalidOperationException();
+}
+```
+
+While this does work there are a few issues with this approach:
+
+- What if the implementing type doesn't contain a matching constructor?
+- What if I add a new parameter to the call to `Activator.CreateInstance(){:cs}`?
+- While minimal `Activator.CreateInstance(){:cs}` does have some overhead when compared to using `new()`.
+- If the interface changes and new parameters are included, you won't get a compile error in consuming interfaces.
+
+So how could we workaround that problem, if only there was a feature that allowed us to define a static method on an
+interface 🤔 oh wait there is!
+
+![{{ "width": 320, "height": 240, "alt": "Guy tapping his head" }}](/images/memes/head-tapping.gif)
+
+The first step to utilizing this is creating an abstract method on our interface that we can use to create a new instance
+using our intended parameters. We can then implement this method in each type we want to construct:
+
+```cs
+public interface IBuildServer
+{
+    // ...
+
+    static abstract IBuildServer Create(Environment environment, string optionalValue);
+}
+
+public sealed class AzurePipelines : IBuildServer
+{
+    public static IBuildServer Create(Environment environment, string _) => new AzurePipelines(environment);
+
+    // ...
+}
+```
+
+Again the main benefit here, it's an enforced contract so any type implementing `IBuildServer{:cs}` must implement
+`IBuildServer.Create(Environment environment, string optionalValue){:cs}`. With this in place we can simplify our
+`CreateBuildServer{:.fn}` function like so:
+
+```cs
+    public static IBuildServer CreateBuildServer<T>() where T : IBuildServer =>
+        T.Create(new Environment(), "Some string value");
+```
+
+# Final thoughts
+
+As I've already said I think this is a great feature, it allows for so much more than I've just listed above. I keep
+thinking of new places to use this feature to simplify code that simply were not possible before and now hopefully with
+the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/) we might see wider adoption of this
+feature great feature.
+
+{/* Links */}
+[generic-math]: https://devblogs.microsoft.com/dotnet/dotnet-7-generic-math/
+[generic-math-docs]: https://learn.microsoft.com/en-us/dotnet/standard/generics/math
+[preview-features]: https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#enablepreviewfeatures
