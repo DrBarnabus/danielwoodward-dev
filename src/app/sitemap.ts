@@ -19,11 +19,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${process.env.NEXT_PUBLIC_SITE_URL}${post.url}`,
       changeFrequency: 'monthly',
       priority: 0.7,
-    })),
+    } as const)),
     {
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/about`,
       changeFrequency: 'monthly',
       priority: 0.5,
     },
-  ];
+  ]  as const;
 }
