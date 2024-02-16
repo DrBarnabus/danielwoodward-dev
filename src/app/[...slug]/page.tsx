@@ -44,6 +44,9 @@ export function generateMetadata({ params }: Props): Metadata {
       images: ogImage,
       card: 'summary_large_image',
     },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}${url}`
+    }
   };
 }
 

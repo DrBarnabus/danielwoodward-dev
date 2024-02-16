@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     images: 'og',
     card: 'summary_large_image',
   },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`
+  }
 };
 
 export default function Page() {
