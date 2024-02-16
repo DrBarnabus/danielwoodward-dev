@@ -123,7 +123,7 @@ export default makeSource({
         rehypeAutolinkHeadings,
         {
           behavior: 'prepend',
-          test: ['h1', 'h2', 'h3'],
+          test: ['h1', 'h2', 'h3', 'h4'],
           content: s(
             'svg',
             {

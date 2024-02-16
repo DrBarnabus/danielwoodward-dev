@@ -25,7 +25,7 @@ And as an added bonus the [full source code](#full-source-code) for the hook is 
   - [Full source code](#full-source-code)
 </TableOfContents>
 
-# Starting from scratch
+## Starting from scratch
 
 Typically when you need to listen to an event in javascript you will need to add an event listener to the target that is publishing those events.
 For example to listen for events on the window, document or another event target with pure javascript you would do this by calling
@@ -88,7 +88,7 @@ which will remove our event listener from the window. Finally we provide an empt
 
 While this approach works, it results in a lot of repeated code across components or even within the same component if you need to listen to multiple events. So luckily we have custom hooks to our rescue 🎉
 
-# Making our own custom hook
+## Making our own custom hook
 
 Now we understand the basics of using event handlers inside of `useEffect{:.fn}` lets build our own custom hook to simplify our previous example component. Since this is the first part in my series of posts about custom hooks,
 lets start at the beginning with what is a custom hook?
@@ -255,7 +255,7 @@ export const useEventListener = <K extends keyof EventMap>(
 
 And that's all there is to it, if you have been following along then you have just created the `useEventListener(targetElement, type, listener){:ts}` custom hook from scratch! 🥳🎉
 
-## How to use it
+### How to use it
 
 Now we have our custom hook you may ask "how do I use this in my components?", and that's easy you simply reference the hook in your imports, call it in your component and provide the required parameters:
 
@@ -273,7 +273,7 @@ const App = () => {
 
 Now isn't that much simpler to understand and it reduces code replication/complexity, what's not to love 😀
 
-# Full source code
+## Full source code
 
 As will always be the case the full source code for the custom hook we created in this post is available below and you can also see examples of it being used in action
 in the [GitHub Repository](https://github.com/DrBarnabus/danielwoodward-dev/blob/main/src/hooks/useEventListener.ts) for the blog you are reading right now!

@@ -24,7 +24,6 @@ export function generateMetadata({ params }: Props): Metadata {
     title: 'Post Not Found',
     summary: undefined,
     url: '/posts',
-    publishedDate: new Date().toISOString(),
   };
 
   const ogImage = `og?title=${title}`;
