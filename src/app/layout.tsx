@@ -1,6 +1,7 @@
 import '~/styles/global.scss';
 
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { cx } from 'class-variance-authority';
 import { Inter } from 'next/font/google';
 import type { Metadata, Viewport } from 'next/types';
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </footer>
 
           <Analytics />
+          <SpeedInsights />
         </ClientLayout>
       </body>
     </html>
