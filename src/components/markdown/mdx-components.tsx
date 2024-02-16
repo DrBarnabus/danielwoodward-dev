@@ -24,7 +24,7 @@ function a({ href, children }: HTMLProps<HTMLAnchorElement>) {
 }
 
 function p(props: React.HTMLProps<HTMLParagraphElement>) {
-  return <div className={cx('my-5', props.className)} {...props}></div>;
+  return <p className={cx('my-5', props.className)} {...props}></p>;
 }
 
 function pre({ children }: React.HTMLProps<HTMLPreElement>) {

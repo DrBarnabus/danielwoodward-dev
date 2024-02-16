@@ -32,7 +32,7 @@ So without further adieu let's talk about Static abstract/virtual members and in
 - [Final thoughts](#final-thoughts)
 </TableOfContents>
 
-# First a quick introduction
+## First a quick introduction
 
 Now I've said already twice it's one of my favourite features added in C# 11, but let's go back to the beginning. What
 exactly does Static Abstract Members in Interfaces mean and how can we use them to write better code?
@@ -92,7 +92,7 @@ be implemented by the type that's implementing `INumber<TSelf>{:cs}`.
 
 So now we know what Static Abstract/Virtual Members in Interfaces are, let's continue with some more detailed examples.
 
-# Generic Math
+## Generic Math
 
 Now we've already briefly covered [Generic Math][generic-math] but here are a few reasons using generic math can improve
 your code both in applications and libraries:
@@ -106,7 +106,7 @@ your code both in applications and libraries:
 
 If you want to find out more about Generic Math you can read about it in the dotnet documentation [here][generic-math-docs].
 
-# Parsing & Formatting
+## Parsing & Formatting
 
 Another example of where this helps us reduce repeated code is with parsing and formatting. Historically if you wanted to
 implement a function to parse a string (for example to get an `int{:cs}` out of a `Claim{:cs}`) then you might need to
@@ -137,7 +137,7 @@ Again one of the main benefits of this these new types of interfaces is that you
 `IParsable<TSelf>{:cs}`/`IFormattable{:cs}` as your generic, reducing the amount of code required to support many types
 including ones you didn't know about at the time of writing which is great for libraries.
 
-# Strongly typed construction of Interfaces
+## Strongly typed construction of Interfaces
 
 One issue I've hit quite often while working on Generic/Extensible Code is constructing instances of types implementing
 interfaces from generic code. Take for example an interface for a Build Server and an implementing type:
@@ -208,7 +208,7 @@ Again the main benefit here, it's an enforced contract so any type implementing 
         T.Create(new Environment(), "Some string value");
 ```
 
-# Final thoughts
+## Final thoughts
 
 As I've already said I think this is a great feature, it allows for so much more than I've just listed above. I keep
 thinking of new places to use this feature to simplify code that simply were not possible before and now hopefully with

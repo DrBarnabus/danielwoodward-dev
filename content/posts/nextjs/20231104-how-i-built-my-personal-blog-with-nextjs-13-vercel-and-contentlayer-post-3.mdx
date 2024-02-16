@@ -40,7 +40,7 @@ available on my GitHub [DrBarnabus/next13-blog][next13-blog-repo].
 
 This is the third part of a series of posts on this topic, if you want to checkout the last part you can find it [here][post-2].
 
-# Upgrading to Next.js 14
+## Upgrading to Next.js 14
 
 When I initially started this series of posts (and my own personal blog project) the latest and greatest Next.js was v13.
 Since then [Next.js Conf 2023][nextjs-conf] happened and Next.js v14 was released but to be honest it doesn't change much
@@ -67,7 +67,7 @@ where everything should be working just like it was before but now in v14!
   any issues upgrading.
 </CalloutPanel>
 
-# Enabling GFM (GitHub Flavoured Markdown)
+## Enabling GFM (GitHub Flavoured Markdown)
 
 If like me your first introduction to Markdown (`.md{:text}`) was GitHub then you should already be very familiar with Github
 Flavoured Markdown even if you weren't aware you were using it. [GFM][gfm] was introduced to GitHub as early as 2009 and adds
@@ -78,7 +78,7 @@ into a [formal spec][gfm] and there are some great packages we can use to enable
 using [Contentlayer][contentlayer] is uses a library called remark under the hood, for which there is already an extension
 for GitHub Flavoured Markdown [remark-gfm][remark-gfm].
 
-### Install the required packages
+#### Install the required packages
 
 ```bash
 yarn add remark-gfm@^3.0.1
@@ -87,7 +87,7 @@ yarn add remark-gfm@^3.0.1
 > Using `remark-gfm@^3.0.1{:text}` here as at the time of writing (03-11-2023) `remark-gfm@^4.0.0{:text}` doesn't seem
 > to work with Contentlayer
 
-### Add plugin to the Contentlayer config
+#### Add plugin to the Contentlayer config
 
 ```ts title="contentlayer.config.ts" showLineNumbers {2}
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
@@ -108,7 +108,7 @@ export default makeSource({
 });
 ```
 
-### Confirm it's working
+#### Confirm it's working
 
 We can then confirm it's working by using a GFM feature that isn't natively supported in Markdown, let's edit `post-01.mdx{:text}`
 and add a table to it using the syntax from GFM:
@@ -131,7 +131,7 @@ And provided it's working you should see the following output on the rendered pa
 For examples of things you can do using GitHub Flavoured Markdown I would recommend reading the guide on
 [GitHub's website][gfm-guide].
 
-# Enabling Code Syntax Highlighting
+## Enabling Code Syntax Highlighting
 
 What would a coding blog be without syntax highlighting, one answer hard to read and just plain boring... So how can we
 enable syntax highlighting on our blog if that's something that we want to do?
@@ -151,7 +151,7 @@ for rehype powered by [Shiki][shiki] that we can install for syntax highlighting
 
 So let's get started enabling it in our project!
 
-### Install the required packages
+#### Install the required packages
 
 Firstly we need to install `rehype-pretty-code{:text}` itself and `shiki{:text}` which is a peerDependency of the plugin:
 
@@ -159,7 +159,7 @@ Firstly we need to install `rehype-pretty-code{:text}` itself and `shiki{:text}`
 yarn add rehype-pretty-code shiki
 ```
 
-### Add plugin to the Contentlayer config
+#### Add plugin to the Contentlayer config
 
 Once the plugin is installed let's add it to our Contentlayer configuration, we're going to use two settings that are
 different from the defaults. These are `theme: 'github-light'{:ts}` which changes the default theme and `grid: false{:ts}`
@@ -223,7 +223,7 @@ unstyled codeblock:
 What would be nice is if the code blocks had some styling, it should be clear what is part of the code block and what isn't.
 Also you might've noticed that the features we enabled on the code block, namely line/word highlighting aren't working...
 
-### Styling our codeblock
+#### Styling our codeblock
 
 That's because we need some custom styling, we need to define some styles for the code blocks to get them looking great.
 
@@ -298,7 +298,7 @@ Now if you run our example, you'll see that it's much closer to what we want. It
 100% yet. That's because some of our base styling for text is affecting our code block, and disabling that requires a bit
 more work.
 
-### Customizing the `<pre>{:html}` element
+#### Customizing the `<pre>{:html}` element
 
 This is where our `MdxContent{:.fn}` component comes in just like we created an override for `<a>{:html}` we can now create
 an override for the `<pre>{:html}` element in our MDX. Initially this will be just for styling but it means we can expand
@@ -342,7 +342,7 @@ our completely styled codeblock rendered to the page 🎉
 
 ![{{ "width": 900, "height": 575, "alt": "A screenshot a rendered and now styled codeblock", "caption": "Now doesn't that look much better 👏" }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-3/codeblock-styled.png)
 
-### Adding additional functionality
+#### Adding additional functionality
 
 Now we have our styled codeblock we can move onto adding additional features, for example you might want to implement a
 copy to clipboard function to your codeblock so that readers can easily copy code examples. As an example of such an
@@ -419,7 +419,7 @@ And with that we have a great looking codeblock with styling and some additional
 number of things in this series you don't have to stop here. The customizations you can make are only constrained by your
 creativity.
 
-# What's next for this series?
+## What's next for this series?
 
 Well let's check in once again with our list of additional features that we could implement that we set out in [Part 1 of this Series][post-1-what-to-do-next]:
 

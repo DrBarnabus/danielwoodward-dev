@@ -1,7 +1,7 @@
 'use client';
 
-import { useMDXComponent } from 'next-contentlayer/hooks';
 import { cx } from 'class-variance-authority';
+import { useMDXComponent } from 'next-contentlayer/hooks';
 import { MdxComponents } from './mdx-components';
 
 type Props = {
