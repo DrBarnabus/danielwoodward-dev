@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     images: ogImage,
     card: 'summary_large_image',
   },
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/posts`
+  }
 };
 
 export default function Page() {
