@@ -2,6 +2,7 @@
   "name": "danielwoodward-dev",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@8.15.8+sha256.691fe176eea9a8a80df20e4976f3dfb44a04841ceb885638fe2a26174f81e65e",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
+    "@types/mdx": "^2.0.13",
     "@types/node": "20.11.19",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",
@@ -50,6 +52,5 @@
     "sass": "^1.71.0",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3"
-  },
-  "packageManager": "yarn@3.5.0"
+  }
 }
