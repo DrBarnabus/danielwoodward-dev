@@ -43,6 +43,7 @@ export const Figure = ({ src, alt: altFromMdx }: Props) => {
         width={width}
         height={height}
         className={cx('rounded', caption ? 'rounded-b-none' : '')}
+        unoptimized={src.endsWith('.gif')}
       />
 
       {caption && (

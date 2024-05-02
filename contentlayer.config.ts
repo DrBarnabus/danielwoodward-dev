@@ -4,6 +4,7 @@ import rehypeAutolinkHeadings, { type Options as AutolinkOptions } from 'rehype-
 import rehypePrettyCode, { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import remarkUnwrapImages from 'remark-unwrap-images';
 
 const resolveUrl = (flattenedPath: string, removeFirstElement: boolean) => {
   let pathParts = flattenedPath.split('/');
@@ -114,6 +115,8 @@ export default makeSource({
     remarkPlugins: [
       /** Add support for GitHub Flavoured Markdown */
       remarkGfm,
+      /** Unwrap images so they aren't inside a <p> */
+      remarkUnwrapImages
     ],
     rehypePlugins: [
       /** Add `id` attributes to headings */
