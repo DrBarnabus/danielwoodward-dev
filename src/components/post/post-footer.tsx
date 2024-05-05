@@ -1,19 +1,18 @@
 import { cx } from 'class-variance-authority';
-import { type Post, allPosts } from 'contentlayer/generated';
+import { allPosts, type Post } from 'contentlayer/generated';
 import { PostCard } from './post-card';
 import { ShareButton } from './share-button';
 
 const RecommendedPosts = ({ posts }: { posts: Post[] }) => {
   return (
-    <div className="mb-8">
-      <h2 className="mb-4 text-lg font-bold text-zinc-800 dark:text-zinc-50 sm:text-xl">
-        If you liked this post, then you might also be interested in:
-      </h2>
-
-      {posts.map((post) => (
-        <PostCard key={post.url} post={post} compact />
-      ))}
-    </div>
+    <>
+      <h3>If you liked this post, then you might also be interested in:</h3>
+      <div className="not-prose">
+        {posts.map((post) => (
+          <PostCard key={post.url} post={post} compact />
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -30,10 +29,12 @@ export const PostFooter = ({ post }: Props) => {
     <section>
       <div
         className={cx(
-          'prose max-w-none pb-8 pt-4 dark:prose-invert',
+          'prose max-w-none pb-8 pt-4',
+          'prose-base md:prose-lg lg:prose-xl xl:prose-2xl',
+          'prose-zinc dark:prose-invert',
           'prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80 hover:prose-a:underline',
           'prose-hr:mb-6 prose-hr:border-zinc-300 dark:prose-hr:border-zinc-700',
-          recommendedPosts ? 'mb-2' : 'mb-8'
+          recommendedPosts ? 'mb-2' : 'mb-8',
         )}
       >
         <hr />
@@ -45,14 +46,15 @@ export const PostFooter = ({ post }: Props) => {
           </p>
           <ShareButton url={post.url} title={post.title} />
         </div>
+
         <p className="my-3 sm:my-1">
           Whether you did or you didn&apos;t I would love to hear your feedback; what works, what doesn&apos;t, did I
           leave anything out? Unfortunately I haven&apos;t implemented comments yet, but my socials are linked in the
           footer of this page if you wish to contact me.
         </p>
-      </div>
 
-      {recommendedPosts.length > 0 ? <RecommendedPosts posts={recommendedPosts} /> : null}
+        {recommendedPosts.length > 0 ? <RecommendedPosts posts={recommendedPosts} /> : null}
+      </div>
     </section>
   );
 };

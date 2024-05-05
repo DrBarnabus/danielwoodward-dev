@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { type FormattedDateTime, getFormattedDateTime } from '~/lib';
+import { getFormattedDateTime, type FormattedDateTime } from '~/lib';
 
 type Props = {
   publishedDate: string;
   onFormattedDateTimeUpdated?: (newValues: FormattedDateTime) => void;
-  className: string;
+  className?: string;
 };
 
 export const PostPublished = ({
