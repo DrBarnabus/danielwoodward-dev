@@ -46,7 +46,7 @@ This will be the first part in a series of posts on this topic, [part 2][post-2]
 
 ## Why build a blog from scratch in the first place?
 
-![{{ "width": 480, "height": 270, "alt": "A person falling over at a Petrol Station with Text I can do it myself" }}](/images/memes/i-can-do-it-myself.gif)
+![{{ "width": 480, "height": 270, "alt": "A person falling over at a Petrol Station with Text I can do it myself", "unoptimized": true }}](/images/memes/i-can-do-it-myself.gif)
 
 Why would you build a blog from scratch when there are [countless existing platforms][forbes-best-blogging-platforms] that would have
 required a single click to setup? And it's an **extremely valid** question, even after spending my time building this site, I am
@@ -93,7 +93,7 @@ Onto our second topic for this post, why choose the specific technologies I have
 
 There are a number of building blocks you could use to implement any application, some are right for the job and some of them are not.
 
-![{{ "width": 300, "height": 302, "alt": "That's right! It goes in the square hole" }}](/images/memes/the-square-hole.gif)
+![{{ "width": 300, "height": 302, "alt": "That's right! It goes in the square hole", "unoptimized": true }}](/images/memes/the-square-hole.gif)
 
 So I would like to quickly go through the main building blocks of the blog; NextJS, ContentLayer and Vercel.
 
@@ -107,7 +107,7 @@ push I needed to properly investigate Next.js and dive into creating some Hobby 
 model for creating apps I just instantly fell in love ❤️. (As a side note, I know it's technically Next.js but I just prefer writing it as
 NextJS 🤷)
 
-![{{ "width": 450, "height": 252, "alt": "Homelander saying it was perfect" }}](/images/memes/perfect-homelander.gif)
+![{{ "width": 450, "height": 252, "alt": "Homelander saying it was perfect", "unoptimized": true }}](/images/memes/perfect-homelander.gif)
 
 One of the strong points of NextJS is that it can statically generate pages at build time, which is great for our use case as it's going to
 almost entirely consist of static content. Any content that I can't statically generate, such as OpenGraph images, I'm planning on deploying
@@ -136,7 +136,7 @@ extremely impressive and compelling experience.
 Vercel also excels at delivering your content as rapidly as possible. It's excellent caching and edge functions ensure your content is as
 close to your users location as possible giving them an extremely performant experience.
 
-![{{ "width": 440, "height": 248, "alt": "The Flash running", "caption": "How it feels running your site on Vercel" }}](/images/memes/flash-run.gif)
+![{{ "width": 440, "height": 248, "alt": "The Flash running", "caption": "How it feels running your site on Vercel", "unoptimized": true }}](/images/memes/flash-run.gif)
 
 ## Getting started
 
@@ -165,7 +165,7 @@ yarn create next-app@latest --ts --tailwind --eslint --experimental-app --src-di
 cd next13-blog
 ```
 
-![{{ "width": 875, "height": 250, "alt": "Terminal Window showing Step 1", "caption": "Step 1. Create the Project" }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step1.webp)
+![{{ "width": 875, "height": 250, "alt": "Terminal Window showing Step 1", "caption": "Step 1. Create the Project", "unoptimized": true }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step1.webp)
 
 > After that command completed I did a few small tweaks to the project, these are changes that I always make to new NextJS Projects.
 > I'm not going to create individual steps for them all as they don't directly relate to this example, but you can see the changes in
@@ -306,7 +306,7 @@ but you can of course call these anything you would like and fill them with anyt
 Now we have defined our posts (or at least our example posts) we can start getting this data into our pages. Let's begin by starting
 `yarn dev{:bash}` so that our dev server is running and our `.contentlayer{:text}` directory and files are generated.
 
-![{{ "width": 900, "height": 492, "alt": "Terminal Window showing 'yarn dev'", "caption": "Step 5. Starting development server" }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step5-1.webp)
+![{{ "width": 900, "height": 492, "alt": "Terminal Window showing 'yarn dev'", "caption": "Step 5. Starting development server", "unoptimized": true }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step5-1.webp)
 
 <CalloutPanel type="info" hideType>
   Due to a bug in Contentlayer at the time of writing the `.contentlayer{:text}` directory might not be automatically generated when
@@ -471,7 +471,7 @@ export default function Page({ params }: Props) {
 And that's all there is to it, clicking on a link to one of the posts on our feed should now take us to the generated html from our
 markdown files!
 
-![{{ "width": 900, "height": 235, "alt": "Demonstration of the Feed/Post pages working", "caption": "It's just that easy 🥳🎉" }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step6.webp)
+![{{ "width": 900, "height": 235, "alt": "Demonstration of the Feed/Post pages working", "caption": "It's just that easy 🥳🎉", "unoptimized": true }}](/images/posts/nextjs/how-i-built-my-personal-blog-with-nextjs-13-vercel-and-contentlayer-post-1/step6.webp)
 
 We now have a working site that generates html from our markdown files, from here we can do almost anything we want to style the html such
 as adding CSS styles. So you may be asking...

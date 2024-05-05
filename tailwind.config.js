@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       gridTemplateColumns: {
-        layout: '1fr minmax(480px, 1280px) 1fr',
+        layout: '1fr minmax(30px, 80rem) 1fr',
       },
       gridTemplateRows: {
         layout: '6rem minmax(calc(100vh - 12rem), 1fr) 6rem',

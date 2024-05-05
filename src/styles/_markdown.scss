@@ -35,7 +35,7 @@ h4 {
   }
 
   figcaption {
-    @apply w-full rounded-t-lg bg-zinc-200 px-4 py-1 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300;
+    @apply w-full rounded-t bg-zinc-200 px-4 py-1 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300;
 
     + pre > code {
       @apply rounded-t-none;
@@ -51,7 +51,7 @@ h4 {
   }
 
   code {
-    @apply inline-block rounded-lg bg-white p-1 dark:bg-zinc-800;
+    @apply inline-block rounded bg-white p-1 dark:bg-zinc-800;
 
     &::before,
     &::after {
