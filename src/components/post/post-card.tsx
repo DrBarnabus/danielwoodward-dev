@@ -4,7 +4,6 @@ import { cx } from 'class-variance-authority';
 import { type Post } from 'contentlayer/generated';
 import Link from 'next/link';
 import { useState } from 'react';
-import Balancer from 'react-wrap-balancer';
 import { getFormattedDateTime } from '~/lib';
 import { PostPublished } from './post-published';
 import { PostTags } from './post-tags';
@@ -34,7 +33,7 @@ export const PostCard = ({ post, compact = false, superCompact = false }: Props)
         <div className="flex flex-col space-y-2 pr-4">
           <p
             className={cx(
-              'text-zinc-800 dark:text-zinc-50',
+              'text-balance text-zinc-800 dark:text-zinc-50',
               compact
                 ? superCompact
                   ? 'text-base hover:text-accent dark:hover:text-accent'
@@ -42,21 +41,15 @@ export const PostCard = ({ post, compact = false, superCompact = false }: Props)
                 : 'text-2xl font-bold sm:text-3xl',
             )}
           >
-            <Balancer>
-              {title}
-              {isFresh && !compact ? (
-                <div className="ml-2 inline-block text-base font-semibold text-accent motion-safe:animate-bounce">
-                  New
-                </div>
-              ) : null}
-            </Balancer>
+            {title}
+            {isFresh && !compact ? (
+              <div className="ml-2 inline-block text-base font-semibold text-accent motion-safe:animate-bounce">
+                New
+              </div>
+            ) : null}
           </p>
 
-          {!superCompact ? (
-            <p className="text-zinc-700 dark:text-zinc-200">
-              <Balancer>{summary}</Balancer>
-            </p>
-          ) : null}
+          {!superCompact ? <p className="text-balance text-zinc-700 dark:text-zinc-200">{summary}</p> : null}
 
           {!compact ? (
             <>

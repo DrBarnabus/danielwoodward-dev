@@ -47,9 +47,6 @@ dependencies:
   react-typist-component:
     specifier: ^1.0.6
     version: 1.0.6(react@18.3.1)
-  react-wrap-balancer:
-    specifier: ^1.1.0
-    version: 1.1.0(react@18.3.1)
   rehype-autolink-headings:
     specifier: 7.1.0
     version: 7.1.0
@@ -4754,14 +4751,6 @@ packages:
     resolution: {integrity: sha512-DOcMvPyqsB2dgh/DtfaDrrNSoZAFarToPXn82WN56vF9DJBeS5ss5voLI1x+nntXiWpWCUJkLL/rDS4/W0YTSQ==}
     peerDependencies:
       react: '>=18.0.0'
-    dependencies:
-      react: 18.3.1
-    dev: false
-
-  /react-wrap-balancer@1.1.0(react@18.3.1):
-    resolution: {integrity: sha512-EhF3jOZm5Fjx+Cx41e423qOv2c2aOvXAtym2OHqrGeMUnwERIyNsRBgnfT3plB170JmuYvts8K2KSPEIerKr5A==}
-    peerDependencies:
-      react: '>=16.8.0 || ^17.0.0 || ^18'
     dependencies:
       react: 18.3.1
     dev: false
