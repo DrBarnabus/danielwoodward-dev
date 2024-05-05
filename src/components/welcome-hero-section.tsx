@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Typist from 'react-typist-component';
-import Balancer from 'react-wrap-balancer';
 
 export const WelcomeHeroSection = () => {
   const statements = [
@@ -21,10 +20,8 @@ export const WelcomeHeroSection = () => {
 
   return (
     <section className="flex flex-col space-y-2 text-zinc-900 dark:text-zinc-50">
-      <h1 className="text-2xl font-bold drop-shadow-sm  sm:text-3xl md:text-5xl">
-        <Balancer>
-          Hi, my name is <span className="text-accent">Daniel Woodward</span>
-        </Balancer>
+      <h1 className="text-balance text-2xl font-bold  drop-shadow-sm sm:text-3xl md:text-5xl">
+        Hi, my name is <span className="text-accent">Daniel Woodward</span>
       </h1>
 
       <h2 className="text-xl font-semibold text-zinc-700 dark:text-zinc-400 max-sm:h-14 sm:text-2xl md:text-3xl">

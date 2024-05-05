@@ -1,6 +1,5 @@
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
-import Balancer from 'react-wrap-balancer';
 
 type ImageAltProps = {
   width: number;
@@ -47,8 +46,8 @@ export const Figure = ({ src, alt: altFromMdx }: Props) => {
       />
 
       {caption && (
-        <figcaption className="m-0 rounded-b bg-zinc-300/50 px-6 py-1 text-center text-zinc-700 dark:bg-zinc-100/5 dark:text-zinc-50">
-          <Balancer>{caption}</Balancer>
+        <figcaption className="m-0 text-balance rounded-b bg-zinc-300/50 px-6 py-1 text-center text-zinc-700 dark:bg-zinc-100/5 dark:text-zinc-50">
+          {caption}
         </figcaption>
       )}
     </figure>
