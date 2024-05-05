@@ -14,7 +14,7 @@ export function MdxContent({ code }: Props) {
   return (
     <section
       className={cx(
-        'prose max-w-none pb-4 pt-8',
+        'prose max-w-none pb-4 pt-8 text-pretty',
         'prose-base md:prose-lg lg:prose-xl xl:prose-2xl',
         'prose-zinc dark:prose-invert',
         'prose-headings:drop-shadow-sm',
