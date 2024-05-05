@@ -147,24 +147,14 @@ export default makeSource({
       ],
       [
         /** Code block syntax highlighting and enhancement */
-        rehypePrettyCode,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        rehypePrettyCode as any,
         {
           theme: {
             light: 'github-light',
             dark: 'github-dark',
           },
           grid: false,
-          onVisitLine(node) {
-            if (node.children.length === 0) {
-              node.children = [{ type: 'text', value: ' ' }];
-            }
-          },
-          onVisitHighlightedLine(node) {
-            node.properties.className?.push('highlighted');
-          },
-          onVisitHighlightedChars(node) {
-            node.properties.className = ['word'];
-          },
           tokensMap: {
             fn: 'entity.name',
             type: 'entity.name',
