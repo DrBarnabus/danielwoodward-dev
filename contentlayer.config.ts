@@ -150,11 +150,15 @@ export default makeSource({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         rehypePrettyCode as any,
         {
+          defaultLang: {
+            block: "plaintext",
+            inline: "plaintext"
+          },
           theme: {
             light: 'github-light',
             dark: 'github-dark',
           },
-          grid: false,
+          grid: true,
           tokensMap: {
             fn: 'entity.name',
             type: 'entity.name',

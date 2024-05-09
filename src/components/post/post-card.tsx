@@ -31,7 +31,7 @@ export const PostCard = ({ post, compact = false, superCompact = false }: Props)
     >
       <article className="transition-padding m-0.5 flex w-full flex-col space-y-4 rounded-md bg-zinc-100 p-4 pl-8 shadow-lg duration-300 ease-in-out hover:shadow-xl group-hover:pl-12 dark:bg-zinc-800">
         <div className="flex flex-col space-y-2 pr-4">
-          <p
+          <div
             className={cx(
               'text-balance text-zinc-800 dark:text-zinc-50',
               compact
@@ -47,7 +47,7 @@ export const PostCard = ({ post, compact = false, superCompact = false }: Props)
                 New
               </div>
             ) : null}
-          </p>
+          </div>
 
           {!superCompact ? <p className="text-balance text-zinc-700 dark:text-zinc-200">{summary}</p> : null}
 
