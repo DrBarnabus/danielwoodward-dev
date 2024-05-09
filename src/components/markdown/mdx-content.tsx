@@ -21,7 +21,7 @@ export function MdxContent({ code }: Props) {
         'prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80 hover:prose-a:underline',
         'prose-hr:my-8 prose-hr:border-zinc-300 dark:prose-hr:border-zinc-700',
         'prose-blockquote:border-l-zinc-300 dark:prose-blockquote:border-l-zinc-700',
-        'prose-ul:my-4 prose-li:my-0 prose-li:marker:text-zinc-300 dark:prose-li:marker:text-zinc-400',
+        'prose-ul:my-4 prose-li:my-0 prose-li:marker:text-zinc-300 dark:prose-li:marker:text-zinc-400'
       )}
     >
       <Component components={MdxComponents} />

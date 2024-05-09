@@ -43,7 +43,7 @@ export const CodeBlock = ({ children }: Props) => {
   return (
     <pre
       ref={ref}
-      className="relative"
+      className="relative text-base xl:text-lg"
       onMouseEnter={() => setFocusWithin(true)}
       onMouseLeave={() => setFocusWithin(false)}
       onFocus={() => setFocusWithin(true)}

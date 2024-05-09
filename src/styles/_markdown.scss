@@ -46,12 +46,12 @@ h4 {
     @apply m-0 p-0;
 
     > code {
-      @apply grid overflow-x-auto p-4;
+      @apply overflow-x-auto p-4;
     }
   }
 
   code {
-    @apply inline-block rounded bg-white p-1 dark:bg-zinc-800;
+    @apply rounded bg-white p-1 dark:bg-zinc-800;
 
     &::before,
     &::after {
@@ -63,7 +63,7 @@ h4 {
     }
 
     [data-highlighted-chars] {
-      @apply inline-block px-1 py-0.5;
+      @apply px-1 py-0.5;
     }
 
     & > [data-highlighted-line],
