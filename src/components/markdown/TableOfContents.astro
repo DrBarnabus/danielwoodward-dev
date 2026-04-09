@@ -2,7 +2,7 @@
 import ChevronDown from '~/components/icons/ChevronDown.astro';
 ---
 
-<div class="toc my-5 flex w-full flex-col rounded bg-zinc-200/40 dark:bg-zinc-800 sm:w-2/5">
+<div class="toc my-5 flex w-full flex-col rounded bg-zinc-200/40 sm:w-2/5 dark:bg-zinc-800">
   <button
     class="toc-toggle flex flex-row items-center gap-6 rounded bg-zinc-200 px-4 py-2 font-bold text-zinc-700 dark:bg-zinc-700 dark:text-zinc-50"
     aria-label="Expand Table of Contents"
@@ -10,7 +10,7 @@ import ChevronDown from '~/components/icons/ChevronDown.astro';
     <span>Table of Contents</span>
     <ChevronDown class="toc-chevron ml-auto h-4 w-4 transition-transform duration-300 ease-in-out" />
   </button>
-  <div class="toc-content hidden p-2 prose-ul:!my-1">
+  <div class="toc-content prose-ul:!my-1 hidden p-2">
     <slot />
   </div>
 </div>

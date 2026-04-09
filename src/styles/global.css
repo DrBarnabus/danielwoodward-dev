@@ -51,17 +51,16 @@ body {
 }
 
 /* Shiki dual-theme code blocks */
+/* Light theme: Shiki sets color/background-color directly as inline styles */
+/* Dark theme: swap to the --shiki-dark custom properties */
 
-.astro-code,
-.astro-code span {
-  color: var(--shiki-light) !important;
-  background-color: var(--shiki-light-bg) !important;
-}
-
-.dark .astro-code,
-.dark .astro-code span {
+.dark .astro-code {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
+}
+
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
 }
 
 .astro-code {

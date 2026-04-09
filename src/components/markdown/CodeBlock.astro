@@ -11,7 +11,9 @@ const { class: className, ...attrs } = Astro.props;
 <div class="code-block not-prose relative">
   <pre class={className} {...attrs}><slot /></pre>
   <button class="copy-button" aria-label="Copy code">
-    <Copy class="copy-icon h-6 w-6 text-zinc-700 group-hover:text-accent dark:text-zinc-100 dark:group-hover:text-accent" />
+    <Copy
+      class="copy-icon group-hover:text-accent dark:group-hover:text-accent h-6 w-6 text-zinc-700 dark:text-zinc-100"
+    />
     <Check class="check-icon h-6 w-6 text-green-500" />
   </button>
 </div>
