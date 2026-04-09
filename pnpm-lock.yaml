@@ -17,6 +17,9 @@ importers:
       astro:
         specifier: ^6.1.5
         version: 6.1.5(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.1)(typescript@6.0.2)
+      hast-util-to-string:
+        specifier: ^3.0.1
+        version: 3.0.1
       hastscript:
         specifier: ^9.0.1
         version: 9.0.1

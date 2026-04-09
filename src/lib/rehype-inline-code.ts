@@ -1,34 +1,26 @@
-import type { Root } from 'hast';
+import type { Element, ElementContent, Root } from 'hast';
+import { toString } from 'hast-util-to-string';
+import type { BuiltinLanguage } from 'shiki';
 import { createHighlighter, type HighlighterGeneric } from 'shiki';
 import { visit } from 'unist-util-visit';
 
 const langPattern = /\{:(\w+)\}$/;
 const tokenPattern = /\{:\.(\w+)\}$/;
 
-function getTextContent(node: { children: Array<{ value?: string; children?: any[] }> }): string {
-  return node.children
-    .map((child) => {
-      if (child.value) return child.value;
-      if (child.children) return getTextContent(child as typeof node);
-      return '';
-    })
-    .join('');
-}
-
 let highlighter: HighlighterGeneric<string, string> | undefined;
 
 export function rehypeInlineCode() {
   return async (tree: Root) => {
     const nodes: Array<{
-      node: any;
+      node: Element;
       text: string;
       lang: string;
     }> = [];
 
-    visit(tree, 'element', (node: any, _index, parent: any) => {
-      if (node.tagName !== 'code' || parent?.tagName === 'pre') return;
+    visit(tree, 'element', (node: Element, _index, parent) => {
+      if (node.tagName !== 'code' || (parent as Element)?.tagName === 'pre') return;
 
-      const text = getTextContent(node);
+      const text = toString(node);
 
       const tokenMatch = text.match(tokenPattern);
       if (tokenMatch) {
@@ -53,10 +45,10 @@ export function rehypeInlineCode() {
     if (!highlighter) {
       highlighter = await createHighlighter({
         themes: ['github-light', 'github-dark'],
-        langs,
+        langs: langs as BuiltinLanguage[],
       });
     } else {
-      await highlighter.loadLanguage(...(langs as any[]));
+      await highlighter.loadLanguage(...(langs as BuiltinLanguage[]));
     }
 
     for (const { node, text, lang } of nodes) {
@@ -65,16 +57,16 @@ export function rehypeInlineCode() {
         themes: { light: 'github-light', dark: 'github-dark' },
       });
 
-      const pre = hast.children[0] as any;
-      const code = pre?.children?.[0];
-      const line = code?.children?.[0];
+      const pre = hast.children[0] as Element | undefined;
+      const code = pre?.children?.[0] as Element | undefined;
+      const line = code?.children?.[0] as Element | undefined;
 
       if (line?.children) {
-        node.children = line.children;
+        node.children = line.children as ElementContent[];
         node.properties = {
           ...node.properties,
           'data-language': lang,
-          style: pre.properties?.style,
+          style: pre?.properties?.style,
         };
       }
     }

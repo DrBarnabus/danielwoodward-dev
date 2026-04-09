@@ -8,21 +8,21 @@ const { type, hideType = false } = Astro.props;
 
 const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
 
-const bgClasses: Record<string, string> = {
+const bgClasses = {
   info: 'bg-blue-200/50 text-blue-800 dark:bg-blue-400/10 dark:text-blue-200',
   note: 'bg-purple-200/50 text-purple-800 dark:bg-purple-400/10 dark:text-purple-200',
   success: 'bg-green-200/50 text-green-800 dark:bg-green-400/10 dark:text-green-200',
   warning: 'bg-yellow-200/50 text-yellow-800 dark:bg-yellow-400/10 dark:text-yellow-200',
   error: 'bg-red-200/50 text-red-800 dark:bg-red-400/10 dark:text-red-200',
-};
+} satisfies Record<Props['type'], string>;
 
-const badgeClasses: Record<string, string> = {
+const badgeClasses = {
   info: 'bg-blue-500 text-blue-50 dark:bg-blue-700',
   note: 'bg-purple-500 text-purple-50 dark:bg-purple-700',
   success: 'bg-green-500 text-green-50 dark:bg-green-700',
   warning: 'bg-yellow-400 text-yellow-50 dark:bg-yellow-600',
   error: 'bg-red-500 text-red-50 dark:bg-red-700',
-};
+} satisfies Record<Props['type'], string>;
 ---
 
 <div
