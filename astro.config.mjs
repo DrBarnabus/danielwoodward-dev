@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import svelte from '@astrojs/svelte';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -12,7 +13,7 @@ import { rehypeInlineCode } from './src/lib/rehype-inline-code';
 export default defineConfig({
   output: 'static',
   site: 'https://danielwoodward.dev',
-  integrations: [mdx(), svelte()],
+  integrations: [mdx(), svelte(), sitemap()],
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

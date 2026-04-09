@@ -39,6 +39,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : undefined;
     <meta name="publisher" content="Daniel Woodward" />
     <meta name="keywords" content="NextJS, React, Blog, dotnet, C#" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="<DanielWoodward />" href={`${siteUrl}/rss.xml`} />
 
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
