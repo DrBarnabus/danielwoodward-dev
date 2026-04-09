@@ -1,20 +1,20 @@
 import type { Element, ElementContent, Root } from 'hast';
 import { toString } from 'hast-util-to-string';
-import type { BuiltinLanguage } from 'shiki';
-import { createHighlighter, type HighlighterGeneric } from 'shiki';
+import type { BundledLanguage, BundledTheme, HighlighterGeneric } from 'shiki';
+import { createHighlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 
 const langPattern = /\{:(\w+)\}$/;
 const tokenPattern = /\{:\.(\w+)\}$/;
 
-let highlighter: HighlighterGeneric<string, string> | undefined;
+let highlighter: HighlighterGeneric<BundledLanguage, BundledTheme> | undefined;
 
 export function rehypeInlineCode() {
   return async (tree: Root) => {
     const nodes: Array<{
       node: Element;
       text: string;
-      lang: string;
+      lang: BundledLanguage;
     }> = [];
 
     visit(tree, 'element', (node: Element, _index, parent) => {
@@ -33,7 +33,7 @@ export function rehypeInlineCode() {
         nodes.push({
           node,
           text: text.replace(langPattern, ''),
-          lang: langMatch[1],
+          lang: langMatch[1] as BundledLanguage,
         });
       }
     });
@@ -45,10 +45,10 @@ export function rehypeInlineCode() {
     if (!highlighter) {
       highlighter = await createHighlighter({
         themes: ['github-light', 'github-dark'],
-        langs: langs as BuiltinLanguage[],
+        langs,
       });
     } else {
-      await highlighter.loadLanguage(...(langs as BuiltinLanguage[]));
+      await highlighter.loadLanguage(...langs);
     }
 
     for (const { node, text, lang } of nodes) {

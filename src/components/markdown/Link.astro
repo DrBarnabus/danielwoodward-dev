@@ -5,7 +5,8 @@ type Props = HTMLAttributes<'a'>;
 
 const { href, ...attrs } = Astro.props;
 
-const isExternal = href && !href.startsWith('/') && !href.startsWith('#');
+const hrefString = typeof href === 'string' ? href : href?.toString();
+const isExternal = hrefString && !hrefString.startsWith('/') && !hrefString.startsWith('#');
 ---
 
 <a href={href} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...attrs}><slot /></a>

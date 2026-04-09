@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "lint": "eslint .",
     "format": "prettier -w .",
     "format:check": "prettier -c ."
@@ -26,8 +27,10 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.8",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.2",
+    "@types/hast": "^3.0.4",
     "eslint": "^10.2.0",
     "eslint-plugin-astro": "^1.7.0",
     "prettier": "^3.8.1",
