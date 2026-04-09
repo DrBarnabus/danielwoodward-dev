@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import svelte from '@astrojs/svelte';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { s } from 'hastscript';
@@ -11,7 +12,7 @@ import { rehypeInlineCode } from './src/lib/rehype-inline-code';
 export default defineConfig({
   output: 'static',
   site: 'https://danielwoodward.dev',
-  integrations: [mdx()],
+  integrations: [mdx(), svelte()],
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
