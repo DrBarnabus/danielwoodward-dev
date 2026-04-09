@@ -1,0 +1,41 @@
+---
+const projects = [
+  {
+    name: 'Mimic',
+    url: 'https://github.com/DrBarnabus/Mimic',
+  },
+  {
+    name: 'DacTools',
+    url: 'https://github.com/DrBarnabus/DacTools',
+  },
+  {
+    name: 'GitHub Actions: Pull request automation',
+    url: 'https://github.com/DrBarnabus/pullrequest-automation',
+  },
+];
+---
+
+<section class="flex flex-col space-y-2">
+  <div class="flex flex-row items-center justify-between border-b border-b-zinc-300 dark:border-b-zinc-700">
+    <h2 class="inline-flex text-xl font-semibold sm:text-2xl">Projects</h2>
+    <a
+      href="https://github.com/DrBarnabus"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-accent hover:text-accent/80 hover:underline">GitHub</a
+    >
+  </div>
+
+  {
+    projects.map((project) => (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-accent hover:text-accent/80 hover:underline"
+      >
+        {project.name}
+      </a>
+    ))
+  }
+</section>

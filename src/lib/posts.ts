@@ -7,7 +7,5 @@ export const getReadingTime = (content: string) => {
 
 export const getSortedPosts = async () => {
   const posts = await getCollection('posts');
-  return posts.sort(
-    (a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime(),
-  );
+  return posts.sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime());
 };

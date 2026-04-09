@@ -1,7 +1,16 @@
 ---
+import WelcomeHeroSection from '~/components/WelcomeHeroSection.astro';
+import WelcomePostsSection from '~/components/WelcomePostsSection.astro';
+import WelcomeProjectsSection from '~/components/WelcomeProjectsSection.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <p class="py-16 text-zinc-700 dark:text-zinc-200">Site shell — Phase 2 complete.</p>
+  <div class="flex grow flex-col gap-8 px-6 pb-8 lg:flex-row lg:items-center lg:gap-16">
+    <WelcomeHeroSection class="flex flex-col gap-4 lg:flex-1" />
+    <div class="flex flex-col gap-8 lg:flex-1">
+      <WelcomePostsSection />
+      <WelcomeProjectsSection />
+    </div>
+  </div>
 </BaseLayout>

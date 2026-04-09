@@ -1,0 +1,26 @@
+---
+import PostPublished from './PostPublished.astro';
+import PostTags from './PostTags.astro';
+
+interface Props {
+  title: string;
+  readingTime: number;
+  publishedDate: Date;
+  tags: string[];
+}
+
+const { title, readingTime, publishedDate, tags } = Astro.props;
+---
+
+<div class="flex flex-col space-y-4 pt-8 pb-4">
+  <h1 class="text-4xl font-extrabold text-balance drop-shadow-sm md:text-5xl lg:text-6xl xl:text-7xl">
+    {title}
+  </h1>
+  <div
+    class="flex flex-col space-y-1 text-base text-zinc-700 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 md:text-lg lg:text-xl xl:text-2xl dark:text-zinc-200"
+  >
+    <span>{readingTime} min read</span>
+    <PostPublished publishedDate={publishedDate} />
+  </div>
+  <PostTags tags={tags} />
+</div>

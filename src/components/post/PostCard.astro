@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getFormattedDateTime } from '~/lib/date-formatting';
+import PostPublished from './PostPublished.astro';
+import PostTags from './PostTags.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  compact?: boolean;
+  superCompact?: boolean;
+}
+
+const { post, compact: compactProp = false, superCompact = false } = Astro.props;
+const compact = superCompact || compactProp;
+const { isFresh } = getFormattedDateTime(post.data.publishedDate);
+---
+
+<a
+  href={`/posts/${post.id}`}
+  class:list={[
+    'relative flex transition-transform duration-300 ease-in-out',
+    !superCompact ? 'group hover:scale-[1.02]' : '',
+  ]}
+  aria-label={post.data.title}
+>
+  <article
+    class="m-0.5 flex w-full flex-col space-y-4 rounded-md bg-zinc-100 p-4 pl-8 shadow-lg transition-[padding] duration-300 ease-in-out hover:shadow-xl group-hover:pl-12 dark:bg-zinc-800"
+  >
+    <div class="flex flex-col space-y-2 pr-4">
+      <div
+        class:list={[
+          'text-balance text-zinc-800 dark:text-zinc-50',
+          superCompact
+            ? 'text-base hover:text-accent dark:hover:text-accent'
+            : compact
+              ? 'text-xl font-semibold sm:text-2xl'
+              : 'text-2xl font-bold sm:text-3xl',
+        ]}
+      >
+        {post.data.title}
+        {
+          isFresh && !compact && (
+            <div class="text-accent ml-2 inline-block text-base font-semibold motion-safe:animate-bounce">New</div>
+          )
+        }
+      </div>
+
+      {!superCompact && <p class="text-balance text-zinc-700 dark:text-zinc-200">{post.data.summary}</p>}
+
+      {
+        !compact && (
+          <>
+            <PostPublished
+              publishedDate={post.data.publishedDate}
+              class="text-xs text-zinc-600 dark:text-zinc-300"
+            />
+            <PostTags tags={post.data.tags} />
+          </>
+        )
+      }
+    </div>
+  </article>
+  <div
+    class:list={[
+      'bg-accent absolute inset-0 z-20 my-auto h-[calc(100%-0.25rem)] rounded-l transition-[width,height] duration-300 ease-in-out group-hover:h-[calc(80%-0.25rem)]',
+      compact ? 'w-1 group-hover:w-3' : 'w-3 group-hover:w-6',
+    ]}
+  >
+  </div>
+</a>

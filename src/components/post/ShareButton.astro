@@ -1,0 +1,35 @@
+---
+import Share from '~/components/icons/Share.astro';
+
+interface Props {
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+---
+
+<button
+  class="bg-accent hidden min-w-full flex-row items-center justify-center gap-4 rounded-md px-6 py-3 text-white shadow-md transition-transform hover:scale-[1.03] sm:min-w-48"
+  data-share-button
+  data-share-url={url}
+  data-share-title={title}
+>
+  <Share class="h-5 w-5" />
+  <span>Share</span>
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-share-button]').forEach((button) => {
+    if (!navigator.share) return;
+
+    button.classList.remove('hidden');
+    button.classList.add('flex');
+
+    button.addEventListener('click', () => {
+      const url = button.dataset.shareUrl;
+      const title = button.dataset.shareTitle;
+      navigator.share({ url, title });
+    });
+  });
+</script>

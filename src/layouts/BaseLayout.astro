@@ -79,11 +79,11 @@ const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).toString() : undefined;
     </script>
   </head>
 
-  <body class="flex min-h-dvh flex-col bg-zinc-50 dark:bg-zinc-900">
+  <body class="flex min-h-dvh flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
     <header class="sticky top-0 z-50">
       <Header />
     </header>
-    <main class="mx-auto w-full max-w-5xl grow px-4 sm:px-8">
+    <main class="mx-auto flex w-full max-w-5xl grow flex-col px-4 sm:px-8">
       <slot />
     </main>
     <footer>

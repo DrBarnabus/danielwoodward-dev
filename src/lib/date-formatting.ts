@@ -33,7 +33,7 @@ const relativeTimeFormatter = new Intl.RelativeTimeFormat('en-GB', {
 
 const getDateDifference = (date: Date) => date.getTime() - new Date().getTime();
 
-const getRelative = (date: Date) => {
+export const getRelative = (date: Date) => {
   const timeDifferenceInMilliseconds = getDateDifference(date);
 
   const minutes = Math.ceil(timeDifferenceInMilliseconds / 1000 / 60);

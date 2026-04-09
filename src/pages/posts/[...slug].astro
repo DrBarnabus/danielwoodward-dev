@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import PostFooter from '~/components/post/PostFooter.astro';
+import PostHeader from '~/components/post/PostHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { mdxComponents, proseClasses } from '~/lib/mdx';
+import { getReadingTime } from '~/lib/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const readingTime = getReadingTime(post.body!);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary}
+  type="article"
+  publishedTime={post.data.publishedDate.toISOString()}
+  ogImage={`/og/posts/${post.id}.png`}
+>
+  <PostHeader
+    title={post.data.title}
+    readingTime={readingTime}
+    publishedDate={post.data.publishedDate}
+    tags={post.data.tags}
+  />
+  <article class:list={proseClasses}>
+    <Content components={mdxComponents} />
+  </article>
+  <PostFooter post={post} />
+</BaseLayout>

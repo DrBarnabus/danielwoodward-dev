@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import PostCard from './PostCard.astro';
+import ShareButton from './ShareButton.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const postUrl = `${siteUrl}/posts/${post.id}`;
+
+const recommendedPosts = post.data.recommendedPosts?.length
+  ? (await getCollection('posts'))
+      .filter((p) => post.data.recommendedPosts!.includes(p.id))
+      .sort((a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime())
+  : [];
+
+const proseClasses = [
+  'prose max-w-none pb-8 pt-4',
+  'prose-base md:prose-lg lg:prose-xl xl:prose-2xl',
+  'prose-zinc dark:prose-invert',
+  'prose-a:text-accent prose-a:no-underline hover:prose-a:text-accent/80 hover:prose-a:underline',
+  'prose-hr:mb-6 prose-hr:border-zinc-300 dark:prose-hr:border-zinc-700',
+  recommendedPosts.length > 0 ? 'mb-2' : 'mb-8',
+];
+---
+
+<section>
+  <div class:list={proseClasses}>
+    <hr />
+
+    <div class="flex flex-col items-center justify-center sm:flex-row sm:gap-8">
+      <p class="my-3 sm:my-1">
+        Thanks for taking the time to read my post, I hope you enjoyed reading it! If you did I would greatly appreciate
+        it if you shared it with your friends and colleagues.
+      </p>
+      <ShareButton url={postUrl} title={post.data.title} />
+    </div>
+
+    <p class="my-3 sm:my-1">
+      Whether you did or you didn&apos;t I would love to hear your feedback; what works, what doesn&apos;t, did I leave
+      anything out? Unfortunately I haven&apos;t implemented comments yet, but my socials are linked in the footer of
+      this page if you wish to contact me.
+    </p>
+
+    {
+      recommendedPosts.length > 0 && (
+        <>
+          <h3>If you liked this post, then you might also be interested in:</h3>
+          <div class="not-prose">
+            {recommendedPosts.map((rec) => (
+              <PostCard post={rec} compact />
+            ))}
+          </div>
+        </>
+      )
+    }
+  </div>
+</section>
