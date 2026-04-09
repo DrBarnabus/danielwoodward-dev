@@ -1,0 +1,33 @@
+---
+import Copyright from '~/components/icons/Copyright.astro';
+import GitHub from '~/components/icons/GitHub.astro';
+import LinkedIn from '~/components/icons/LinkedIn.astro';
+import Medium from '~/components/icons/Medium.astro';
+import Twitter from '~/components/icons/Twitter.astro';
+
+const year = new Date().getFullYear();
+
+const socials = [
+  { href: 'https://github.com/DrBarnabus', label: 'My GitHub Profile', icon: GitHub },
+  { href: 'https://medium.com/@drbarnabus', label: 'My Medium Profile', icon: Medium },
+  { href: 'https://twitter.com/drbarnabus', label: 'My Twitter Profile', icon: Twitter },
+  { href: 'https://www.linkedin.com/in/daniel-woodward', label: 'My LinkedIn Profile', icon: LinkedIn },
+];
+---
+
+<div class="relative flex flex-col items-center justify-center space-y-4 py-6">
+  <div class="flex flex-row flex-wrap justify-center gap-4">
+    {
+      socials.map(({ href, label, icon: Icon }) => (
+        <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+          <Icon class="hover:text-accent dark:hover:text-accent h-6 w-6 text-zinc-900 dark:text-zinc-100" />
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="flex h-6 flex-row items-center justify-center space-x-1 text-zinc-600 dark:text-zinc-300">
+    <Copyright class="h-3 w-3" />
+    <span class="text-xs">{year} · Daniel Woodward</span>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+---
+import Display from '~/components/icons/Display.astro';
+import Moon from '~/components/icons/Moon.astro';
+import Sun from '~/components/icons/Sun.astro';
+---
+
+<div
+  id="site-header"
+  class="flex flex-row items-center justify-between bg-transparent px-4 py-8 text-zinc-700 backdrop-blur transition-[padding,background-color] duration-300 ease-in-out sm:px-8 dark:text-zinc-50"
+>
+  <nav class="flex h-8 flex-row items-center space-x-2 text-sm sm:space-x-4 sm:text-base">
+    <a href="/">
+      <div class="inline-flex w-full items-center justify-center font-semibold">
+        <span class="text-accent">&lt;</span>
+        <span class="hover:text-accent"
+          >DanielWoodward <span class="hidden sm:inline">{`aka={'DrBarnabus'}`}</span></span
+        >
+        <span class="text-accent ml-1">/&gt;</span>
+      </div>
+    </a>
+    <a href="/posts">
+      <div class="inline-flex w-full items-center justify-center font-semibold">
+        <span class="text-accent">&lt;</span>
+        <span class="hover:text-accent">Posts</span>
+        <span class="text-accent ml-1">/&gt;</span>
+      </div>
+    </a>
+  </nav>
+  <div class="ml-auto flex h-8 flex-row items-center justify-end space-x-1">
+    <button id="theme-toggle" class="cursor-pointer" aria-label="Toggle theme">
+      <Sun
+        class="hover:text-accent dark:hover:text-accent hidden h-6 w-6 text-zinc-800 dark:text-zinc-200"
+        data-theme-icon="light"
+      />
+      <Moon
+        class="hover:text-accent dark:hover:text-accent hidden h-6 w-6 text-zinc-800 dark:text-zinc-200"
+        data-theme-icon="dark"
+      />
+      <Display
+        class="hover:text-accent dark:hover:text-accent hidden h-6 w-6 text-zinc-800 dark:text-zinc-200"
+        data-theme-icon="device"
+      />
+    </button>
+  </div>
+</div>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    let isCompact = false;
+    document.addEventListener('scroll', () => {
+      const shouldBeCompact = document.documentElement.scrollTop > 16;
+      if (shouldBeCompact === isCompact) return;
+      isCompact = shouldBeCompact;
+
+      requestAnimationFrame(() => {
+        header.classList.toggle('bg-slate-500/20', isCompact);
+        header.classList.toggle('bg-transparent', !isCompact);
+        header.classList.toggle('py-2', isCompact);
+        header.classList.toggle('py-8', !isCompact);
+      });
+    });
+  }
+
+  function getTheme(): string {
+    const match = document.cookie.match(/(?:^|; )preferred_theme=([^;]*)/);
+    const theme = match?.[1];
+    if (theme === 'light' || theme === 'dark' || theme === 'device') return theme;
+    return 'device';
+  }
+
+  function setTheme(theme: string) {
+    document.cookie = `preferred_theme=${theme}; path=/; max-age=${60 * 60 * 24 * 30}; secure; samesite=lax`;
+    const dark = theme === 'dark' || (theme === 'device' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.classList.toggle('dark', dark);
+    updateThemeIcon(theme);
+  }
+
+  function updateThemeIcon(theme: string) {
+    document.querySelectorAll<HTMLElement>('[data-theme-icon]').forEach((el) => {
+      el.classList.toggle('hidden', el.dataset.themeIcon !== theme);
+    });
+  }
+
+  function initThemeToggle() {
+    const button = document.getElementById('theme-toggle');
+    if (!button) return;
+
+    const theme = getTheme();
+    updateThemeIcon(theme);
+
+    button.addEventListener('click', () => {
+      const current = getTheme();
+      const next = current === 'device' ? 'light' : current === 'light' ? 'dark' : 'device';
+      setTheme(next);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (getTheme() === 'device') {
+        setTheme('device');
+      }
+    });
+  }
+
+  initHeader();
+  initThemeToggle();
+</script>
