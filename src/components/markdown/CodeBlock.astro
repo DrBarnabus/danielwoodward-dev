@@ -1,10 +1,15 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import Check from '~/components/icons/Check.astro';
 import Copy from '~/components/icons/Copy.astro';
+
+type Props = HTMLAttributes<'pre'>;
+
+const { class: className, ...attrs } = Astro.props;
 ---
 
 <div class="code-block not-prose relative">
-  <slot />
+  <pre class={className} {...attrs}><slot /></pre>
   <button class="copy-button" aria-label="Copy code">
     <Copy class="copy-icon h-6 w-6 text-zinc-700 group-hover:text-accent dark:text-zinc-100 dark:group-hover:text-accent" />
     <Check class="check-icon h-6 w-6 text-green-500" />
