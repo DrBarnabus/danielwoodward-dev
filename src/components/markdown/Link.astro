@@ -8,6 +8,4 @@ const { href, ...attrs } = Astro.props;
 const isExternal = href && !href.startsWith('/') && !href.startsWith('#');
 ---
 
-<a href={href} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...attrs}>
-  <slot />
-</a>
+<a href={href} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...attrs}><slot /></a>

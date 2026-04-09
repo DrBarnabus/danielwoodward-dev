@@ -6,6 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
 import remarkGfm from 'remark-gfm';
+import { rehypeInlineCode } from './src/lib/rehype-inline-code';
 
 export default defineConfig({
   output: 'static',
@@ -39,6 +40,7 @@ export default defineConfig({
         },
       ],
       rehypeUnwrapImages,
+      rehypeInlineCode,
     ],
     shikiConfig: {
       themes: {

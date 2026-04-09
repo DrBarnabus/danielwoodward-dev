@@ -32,6 +32,7 @@ body {
   text-rendering: optimizeSpeed;
 }
 
+
 /* Heading anchor links (rehype-autolink-headings) */
 
 :is(h1, h2, h3, h4) a[href^='#'] {
@@ -115,6 +116,26 @@ body {
 
 .dark :not(pre) > code {
   background-color: rgb(39 39 42);
+}
+
+/* Inline code with syntax highlighting */
+
+:not(pre) > code[data-language] {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg, rgb(244 244 245)) !important;
+}
+
+:not(pre) > code[data-language] span {
+  color: var(--shiki-light) !important;
+}
+
+.dark :not(pre) > code[data-language] {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg, rgb(39 39 42)) !important;
+}
+
+.dark :not(pre) > code[data-language] span {
+  color: var(--shiki-dark) !important;
 }
 
 /* Line numbers */
