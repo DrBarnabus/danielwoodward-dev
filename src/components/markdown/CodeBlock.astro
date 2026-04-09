@@ -1,0 +1,71 @@
+---
+import Check from '~/components/icons/Check.astro';
+import Copy from '~/components/icons/Copy.astro';
+---
+
+<div class="code-block not-prose relative">
+  <slot />
+  <button class="copy-button" aria-label="Copy code">
+    <Copy class="copy-icon h-6 w-6 text-zinc-700 group-hover:text-accent dark:text-zinc-100 dark:group-hover:text-accent" />
+    <Check class="check-icon h-6 w-6 text-green-500" />
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLDivElement>('.code-block').forEach((block) => {
+    const button = block.querySelector<HTMLButtonElement>('.copy-button');
+    if (!button) return;
+
+    const copyIcon = button.querySelector<SVGElement>('.copy-icon');
+    const checkIcon = button.querySelector<SVGElement>('.check-icon');
+    if (!copyIcon || !checkIcon) return;
+
+    button.addEventListener('click', async () => {
+      const code = block.querySelector('pre')?.textContent ?? '';
+      await navigator.clipboard.writeText(code);
+
+      copyIcon.style.display = 'none';
+      checkIcon.style.display = 'block';
+      button.disabled = true;
+
+      setTimeout(() => {
+        copyIcon.style.display = '';
+        checkIcon.style.display = '';
+        button.disabled = false;
+      }, 3000);
+    });
+  });
+</script>
+
+<style>
+  .code-block {
+    position: relative;
+  }
+
+  .copy-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    display: none;
+    height: 2rem;
+    width: 2rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    background-color: white;
+  }
+
+  :global(.dark) .copy-button {
+    background-color: rgb(63 63 70);
+  }
+
+  .code-block:hover .copy-button,
+  .code-block:focus-within .copy-button {
+    display: flex;
+  }
+
+  .check-icon {
+    display: none;
+  }
+</style>

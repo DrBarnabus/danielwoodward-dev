@@ -1,0 +1,38 @@
+---
+interface ImageAltProps {
+  width: number;
+  height: number;
+  alt?: string;
+  caption?: string;
+  unoptimized?: boolean;
+}
+
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt: altFromMdx } = Astro.props;
+
+const { width, height, alt, caption } = JSON.parse(altFromMdx) as ImageAltProps;
+---
+
+<figure class="mx-auto my-5 flex h-fit w-fit flex-col rounded">
+  <img
+    src={src}
+    alt={alt ?? ''}
+    width={width}
+    height={height}
+    class:list={['rounded', caption ? 'rounded-b-none' : '']}
+    loading="lazy"
+    decoding="async"
+  />
+
+  {
+    caption && (
+      <figcaption class="!m-0 text-balance rounded-b bg-zinc-300/50 px-6 py-1 text-center text-zinc-700 dark:bg-zinc-100/5 dark:text-zinc-50">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

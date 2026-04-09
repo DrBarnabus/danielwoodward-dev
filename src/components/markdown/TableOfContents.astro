@@ -1,0 +1,32 @@
+---
+import ChevronDown from '~/components/icons/ChevronDown.astro';
+---
+
+<div class="toc my-5 flex w-full flex-col rounded bg-zinc-200/40 dark:bg-zinc-800 sm:w-2/5">
+  <button
+    class="toc-toggle flex flex-row items-center gap-6 rounded bg-zinc-200 px-4 py-2 font-bold text-zinc-700 dark:bg-zinc-700 dark:text-zinc-50"
+    aria-label="Expand Table of Contents"
+  >
+    <span>Table of Contents</span>
+    <ChevronDown class="toc-chevron ml-auto h-4 w-4 transition-transform duration-300 ease-in-out" />
+  </button>
+  <div class="toc-content hidden p-2 prose-ul:!my-1">
+    <slot />
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLDivElement>('.toc').forEach((toc) => {
+    const toggle = toc.querySelector<HTMLButtonElement>('.toc-toggle');
+    const content = toc.querySelector<HTMLDivElement>('.toc-content');
+    const chevron = toc.querySelector<SVGElement>('.toc-chevron');
+    if (!toggle || !content || !chevron) return;
+
+    toggle.addEventListener('click', () => {
+      const expanded = !content.classList.contains('hidden');
+      content.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+      toggle.classList.toggle('rounded-b-none', !expanded);
+    });
+  });
+</script>
