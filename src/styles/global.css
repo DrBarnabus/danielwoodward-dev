@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+@import '@fontsource/inter/latin.css';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --color-accent: #e93554;
+  --color-accent-dark: #df3b57;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-accent: #e93554;
+}
+
+.dark {
+  --color-accent: #df3b57;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  text-rendering: optimizeSpeed;
+}
