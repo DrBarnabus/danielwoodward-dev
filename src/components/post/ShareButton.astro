@@ -27,9 +27,10 @@ const { url, title } = Astro.props;
     button.classList.add('flex');
 
     button.addEventListener('click', () => {
-      const url = button.dataset.shareUrl;
-      const title = button.dataset.shareTitle;
-      navigator.share({ url, title });
+      const data: ShareData = {};
+      if (button.dataset.shareUrl) data.url = button.dataset.shareUrl;
+      if (button.dataset.shareTitle) data.title = button.dataset.shareTitle;
+      navigator.share(data);
     });
   });
 </script>

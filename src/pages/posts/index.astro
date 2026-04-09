@@ -9,6 +9,7 @@ const posts = await getSortedPosts();
 <BaseLayout
   title="Posts"
   description="Posts about software development, covering topics including dotnet, C# and NextJS"
+  ogImage="/og/posts.png"
 >
   <div class="flex flex-col space-y-4 px-4 pb-8">
     {posts.map((post) => <PostCard post={post} />)}
